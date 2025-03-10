@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<!-- saved from url=(0039)http://localhost/websiteMovie/index.php -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Layar Cinema</title>
+  <link rel="stylesheet" href="./home_files/design.css">
+  <link rel="icon" href="http://localhost/websiteMovie/logo.jpg" type="image/x-icon">
+  <link href="./home_files/css2" rel="stylesheet">
+  <link rel="stylesheet" href="./home_files/all.min.css">
+  <link rel="stylesheet" href="./home_files/all(1).min.css">
+  <link rel="stylesheet" href="./home_files/remixicon.css">
+  <style>
+    /* ==== KODE ASLI UNTUK DESKTOP ==== */
+    * {
+      margin: 0;
+    }
+
+    body {
+      font-family: "Roboto", sans-serif;
+    }
+
+    .navbar {
+      width: 100%;
+      height: 50px;
+      background-color: rgb(0, 0, 0);
+      position: sticky;
+      z-index: 1000;
+      top: 0;
+    }
+
+    .navbar-container {
+      display: flex;
+      align-items: center;
+      padding: 0 50px;
+      height: 100%;
+      color: white;
+      font-family: "Sen", sans-serif;
+    }
+
+    /* Logo */
+    .logo-container {
+      flex: 3;
+    }
+
+    .logo {
+      font-size: 30px;
+      color: rgb(255, 0, 0);
+    }
+
+    /* Menu Navigasi */
+    .menu-container {
+      flex: 8 ;
+    }
+
+    .menu-list {
+      display: flex;
+      list-style: none;   
+    }
+
+    .menu-list-item {
+      margin-right: 80px;
+    }
+
+    .menu-list-item a {
+      text-decoration: none;
+      cursor: pointer;
+      outline: none;
+      border: none;
+      color: white;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .menu-list-item a:hover {
+      color: rgb(255, 0, 0);
+    }
+
+    .menu-list-item.active {
+      font-weight: bold;
+    }
+
+    /* Form Pencarian di dalam Navbar */
+    .search-container-navbar {
+      flex: 3;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-left: 20px;
+    }
+
+    .search-container-navbar form {
+      position: relative;
+      width: 300px;
+      height: 40px;
+      background-color: #fff;
+      border-radius: 25px;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .search-container-navbar form input[type="text"] {
+      width: 100%;
+      border: none;
+      outline: none;
+      border-radius: 25px;
+      font-size: 14px;
+      padding: 10px 15px;
+      color: #333;
+    }
+
+    .search-container-navbar form button {
+      background: none;
+      border: none;
+      color: #ff0000;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    /* Sidebar (tetap ada) */
+    .sidebar {
+      width: 50px;
+      height: 100%;
+      background-color: rgb(0, 0, 0);
+      position: fixed;
+      top: 0px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 60px;
+    }
+
+    .left-menu-icon {
+      color: white;
+      margin-top: 80px;
+      font-size: 20px;
+      margin-bottom: 40px;
+      cursor: pointer;
+    }
+
+    .sidebar:hover {
+      color: rgb(255, 0, 0);
+    }
+
+    /* Container utama */
+    .container {
+      background-color: #151515;
+      min-height: calc(100vh - 50px);
+      color: white;
+    }
+
+    .content-container {
+      margin-left: 50px;
+      padding: 20px;
+    }
+
+    .featured-content {
+      height: 50vh;
+      padding: 50px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .featured-title {
+      width: 200px;
+      margin-top: -60px;
+      margin-left: -50px;
+    }
+
+    .featured-desc {
+      width: 500px;
+      color: lightgray;
+      margin: -35px 0;
+    }
+
+    .featured-button {
+      background-color: rgba(0, 0, 0, 0.86);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      font-weight: bold;
+    }
+
+    .movie-list-container {
+      padding: 0 20px;
+      margin-top: 40px;
+    }
+
+    .movie-list-wrapper {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .movie-list {
+      display: flex;
+      align-items: center;
+      height: 300px;
+      transform: translateX(0);
+      transition: all 1s ease-in-out;
+    }
+
+    .movie-list-item {
+      margin-right: 30px;
+      position: relative;
+    }
+
+    .movie-list-item:hover .movie-list-item-img {
+      transform: scale(1.2);
+      margin: 0 30px;
+      opacity: 0.5;
+    }
+
+    .movie-list-item-img {
+      transition: all 1s ease-in-out;
+      width: 200px;
+      height: 270px;
+      object-fit: cover;
+      border-radius: 20px;
+    }
+
+    .arrow-left, .arrow {
+      font-size: 100px;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      color: lightgray;
+      opacity: 0.5;
+      cursor: pointer;
+      transition: 0.3s;
+      z-index: 10;
+      padding: 10px;
+      border-radius: 50%;
+    }
+
+    .arrow-left {
+      left: 5px;
+    }
+
+    .arrow {
+      right: 5px;
+    }
+
+    .arrow-left:hover, .arrow:hover {
+      opacity: 1;
+    }
+
+    /* ==================footer================== */
+    .footer {
+      background-color: black;
+      padding: 40px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    .footer .logo {
+      margin-left: 50px;
+      font-size: 40px;
+      font-weight: bold;
+      color: red;
+    }
+    .footer .desc {
+      margin-left: 50px;
+      max-width: 300px;
+      font-size: 14px;
+    }
+    .footer .column {
+      margin: 20px;
+    }
+    .footer .column h3 {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+    .footer .column a {
+      display: block;
+      color: red;
+      text-decoration: none;
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+    .footer .column a:hover {
+      text-decoration: underline;
+    }
+
+    .and-text {
+      background-color: black;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .and-text p {
+      color: #fff;
+      text-transform: capitalize;
+    }
+
+    /* =====================================================================
+       TAMBAHAN AGAR HAMBURGER MUNCUL HANYA DI MOBILE & MENU JADI SIDEBAR
+       TANPA MENGUBAH TAMPILAN DESKTOP
+       ===================================================================== */
+
+    /* Hamburger icon: hidden by default (desktop) */
+    .hamburger {
+      display: none;
+      font-size: 24px;
+      color: #fff;
+      margin-left: 10px;
+      cursor: pointer;
+    }
+
+    /* Mobile Sidebar */
+    .mobile-sidebar {
+      width: 200px;
+      height: 100%;
+      background-color: #000;
+      position: fixed;
+      top: 0;
+      left: 0;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      z-index: 2001; 
+      padding-top: 40px;
+    }
+    .mobile-sidebar.active {
+      transform: translateX(0);
+    }
+    .mobile-menu {
+      list-style: none;
+      text-align: center;
+      width: 100%;
+    }
+    .mobile-menu li {
+      margin: 15px 0;
+    }
+    .mobile-menu li a {
+      text-decoration: none;
+      color: #fff;
+      font-size: 16px;
+      transition: 0.2s;
+    }
+    .mobile-menu li a:hover {
+      color: red;
+    }
+    .mobile-menu .active a {
+      font-weight: bold;
+      color: red;
+    }
+
+    /* Responsive (max-width: 767px) */
+    @media (max-width: 767px) {
+      /* Sembunyikan menu horizontal di navbar */
+      .menu-container {
+        display: none;
+      }
+      .hamburger {
+        display: inline-block;
+      }
+      .logo {
+        font-size: 24px;
+      }
+      .search-container-navbar form {
+        width: 100%;
+        max-width: 200px;
+      }
+      .featured-content {
+        height: 40vh;
+        padding: 20px;
+      }
+      .featured-title {
+        width: 150px;
+        margin: 0 auto 10px;
+        display: block;
+      }
+      .featured-desc {
+        width: 100%;
+        text-align: center;
+        margin: 0;
+        font-size: 14px;
+      }
+      /* Footer disembunyikan di mobile */
+      .footer {
+        display: none; /* HIDE FOOTER IN MOBILE */
+      }
+    }
+  </style>
+</head>
+<body> 
+
+  <!-- NAVBAR -->
+  <div class="navbar">
+    <div class="navbar-container">
+      <!-- Logo -->
+      <div class="logo-container">
+        <h1 class="logo">Layar Cinema |</h1>
+      </div>
+      <!-- Menu Navigasi (Desktop) -->
+      <div class="menu-container">
+        <ul class="menu-list">
+          <li class="menu-list-item active"><a href="http://localhost/websiteMovie/index.php#">Home</a></li>
+          <li class="menu-list-item"><a href="http://localhost/websiteMovie/index-movie.php">Movies</a></li>
+          <li class="menu-list-item"><a href="http://localhost/websiteMovie/index-series.php">Series</a></li>
+        </ul>
+      </div>
+      <!-- Search (tetap sama), + hamburger (hidden di desktop) -->
+      <div class="search-container-navbar">
+        <form method="GET" action="http://localhost/websiteMovie/search-index.php">
+          <input type="text" name="search" placeholder="Cari berdasarkan judul" required="" value="">
+          <button type="submit"><i class="fas fa-search"></i></button>
+        </form>
+        <!-- Hamburger icon (muncul hanya di mobile) -->
+        <div class="hamburger" onclick="toggleMobileSidebar()">
+          <i class="fas fa-bars"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sidebar">
+        <a href="http://localhost/websiteMovie/logout.php"><i class="left-menu-icon fas fa-sign-out-alt"></i></a>
+    </div>
+
+  <!-- MOBILE SIDEBAR (muncul saat hamburger diklik di mobile) -->
+  <div class="mobile-sidebar" id="mobileSidebar">
+    <ul class="mobile-menu">
+      <li class="active"><a href="http://localhost/websiteMovie/index.php#">Home</a></li>
+      <li><a href="http://localhost/websiteMovie/index-movie.php">Movies</a></li>
+      <li><a href="http://localhost/websiteMovie/index-series.php">Series</a></li>
+    </ul>
+  </div>
+
+  <!-- Container Utama -->
+  <div class="container">
+    <div class="content-container">
+      <!-- Konten Featured -->
+      <div class="featured-content" style="background: linear-gradient(to bottom, rgba(0,0,0,0), #151515), url(&#39;img/f-1.jpg&#39;);">
+        <img class="featured-title" src="./home_files/pt.png" alt="Featured Title">
+        <p class="featured-desc">
+          Website Layar Cinema adalah sebuah aplikasi web yang dirancang untuk mempermudah pengelolaan untuk melihat rating dan trailer film serta menyediakan informasi tentang sinema bioskop secara online. 
+          Aplikasi ini menawarkan pengalaman sinematik yang modern dan mudah digunakan.
+        </p>
+      </div>
+
+      <!-- List Film Movies -->
+      <div class="movie-list-container">
+        <h1 class="movie-list-title">Film Movies</h1>
+        <div class="movie-list-wrapper">
+          <i class="fas fa-chevron-left arrow-left"></i>
+          <div class="movie-list">
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=sonic-the-hedgehog-3-2024">
+                  <img src="./home_files/2a5b1c4efb0ce31f2410dcece15455f0.jpg" alt="SONIC THE HEDGEHOG 3 (2024)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=kraven-the-hunter-2024">
+                  <img src="./home_files/1573d3a129bf7d87383b28841be10852.jpg" alt=" KRAVEN THE HUNTER (2024)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=mufasa-the-lion-king-2024">
+                  <img src="./home_files/9ed8e583143eb3eb73666dde7fd74a13.jpg" alt="MUFASA: THE LION KING (2024)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=wicked-2024">
+                  <img src="./home_files/c34a8ae1adc2ceceb4cca80164334b38.jpg" alt="WICKED (2024)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=gladiator-II-2024">
+                  <img src="./home_files/bfb16632e3fa58d077a7dcc5ccf92ce5.jpg" alt="GLADIATOR II (2024)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=werewolves-2024">
+                  <img src="./home_files/d3824323e85ec24d43b14bde40e07906.jpg" alt="WEREWOLVES (2024)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=nosferatu-2024">
+                  <img src="./home_files/4d32cd50b168db8abab8cb3015954aed.jpg" alt="NOSFERATU (2024)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=red-one-2024">
+                  <img src="./home_files/9340c7da6337db3199c3ce1c254753d0.jpg" alt="RED ONE (2024)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=venom-the-last-dance-2024">
+                  <img src="./home_files/6fd864ffee03fa335127ce3f1d7ae310.jpg" alt="VENOM: THE LAST DANCE (2024)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=despicable-me4-2024">
+                  <img src="./home_files/b72e87cf45c1ee343ec21616537bac89.jpg" alt="DESPICABLE ME 4 (2024)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=joker-folie-a-deux-2024">
+                  <img src="./home_files/20cabbef7e27fd76e70d1e4876ad4c72.jpg" alt="JOKER: FOLIE A DEUX (2024)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=my-fault-london-2025">
+                  <img src="./home_files/ttN5D6GKOwKWHmCzDGctAvaNMAi.jpg" alt="MY FAULT: LONDON (2025)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=deadpool-wolverine-2024">
+                  <img src="./home_files/ae3dddf605a6113b4dc7dc7b3826e931.jpg" alt="DEADPOOL &amp; WOLVERINE (2024)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=evil-dead-rise-2023">
+                  <img src="./home_files/6f0ac5b524afdab44c2f0bd339339d8e.jpg" alt="EVIL DEAD RISE (2023)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=fast-x-2023">
+                  <img src="./home_files/6f9741d12b79288a0f632a358d21fc41.jpg" alt="FAST X (2023)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=aquaman-and-the-lost-kingdom-2023">
+                  <img src="./home_files/b81fb171542b10350a6ef14b3fca3450.jpg" alt="AQUAMAN AND THE LOST KINGDOM (2023)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=oppenheimer-2023">
+                  <img src="./home_files/779da30964fb69b47c4f03138d482f9d.jpg" alt="OPPENHEIMER (2023)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=kung-fu-panda-4-2024">
+                  <img src="./home_files/8be1b64a292cfd7c1864389c2ac8bb3d.jpg" alt="KUNG FU PANDA 4 (2024)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=godzilla-kong-the-new-empire-2024">
+                  <img src="./home_files/4989301524a62d37238ff2da462b7b40.jpg" alt="GODZILLA x KONG: THE NEW EMPIRE (2024)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=elemental-2023">
+                  <img src="./home_files/aed88f1d2f811cc367156192d9ea904a.jpg" alt="ELEMENTAL (2023)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=the-nun-II%20(2023)">
+                  <img src="./home_files/5aad90047088d2a48187087b3d3be143.jpg" alt="THE NUN II (2023)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=valiant-one-2025">
+                  <img src="./home_files/776e831165eadcb7bfcee93005e9d43b.jpg" alt="VALIANT ONE (2025)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=the-gorge-2025">
+                  <img src="./home_files/5d1a15b98d62ac15e177e77c5b83d5ac.jpg" alt="THE GORGE (2025)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=spider-man-no-way-home-2021">
+                  <img src="./home_files/faa8c2a6a5d681077d1ab02092a67766.jpg" alt="SPIDER-MAN: NO WAY HOME (2021)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=shang-chi-2021">
+                  <img src="./home_files/91b31e070a20658fd193b93cfe7d8a7f.jpg" alt="SHANG-CHI AND THE LEGEND OF THE TEN RINGS (2021)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=black-panther-wakanda-forever-2022">
+                  <img src="./home_files/cce3a89057e39541408276c70f1f3c5c.jpg" alt="BLACK PANTHER: WAKANDA FOREVER (2022)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=morbius-2022">
+                  <img src="./home_files/2d77c1a281f34f6807056f697d539980.jpg" alt="MORBIUS (2022)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=the-wild-robot-2024">
+                  <img src="./home_files/e927548b2883c9c84ea582ad078927b0.jpg" alt="THE WILD ROBOT (2024)" class="movie-list-item-img">
+                </a>
+              </div>
+                      </div>
+          <i class="fas fa-chevron-right arrow"></i>
+        </div>
+      </div>
+
+      <!-- List Film Series -->
+      <div class="movie-list-container">
+        <h1 class="movie-list-title">Film Series</h1>
+        <div class="movie-list-wrapper">
+          <i class="fas fa-chevron-left arrow-left"></i>
+          <div class="movie-list">
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=study-group-2025">
+                  <img src="./home_files/8fed33dc759f12160c21769b2a8f9331.jpg" alt="STUDY GROUP (2025)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=melo-movie-2025">
+                  <img src="./home_files/iEVOYk8eoMdCLFrNXtRSyqVM20c.jpg" alt="MELO MOVIE (2025)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=squid-game-season2-2024">
+                  <img src="./home_files/3811ea700879e3b7a8ada265e71a49cf.jpg" alt="SQUID GAME: SEASON 2 (2024)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=the-last-of-us-2023">
+                  <img src="./home_files/829d865e040cf1ec0b39623fd4def07c.jpg" alt="THE LAST OF US (2023)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=gangnam-b-side-2024">
+                  <img src="./home_files/e61307f96af3a8de8dc8fd02320294d1.jpg" alt="GANGNAM B-SIDE (2024)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=agatha-all-along-2024">
+                  <img src="./home_files/bec2633a7c6b61162210dc002de37f5c.jpg" alt="AGATHA ALL ALONG (2024)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=the-hooligan-2025">
+                  <img src="./home_files/vPva6bEwnrmgpNyHe8WDNkvxaav.jpg" alt="THE HOOLIGAN (2025)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=the-trauma-code-heroes%20-on-call-2025">
+                  <img src="./home_files/y8h2RwUZM5chv9tuaKVwSPoo3KE.jpg" alt="THE TRAUMA CODE: HEROES ON CALL (2025)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=your-friendly-neighborhood-spider-man-2025">
+                  <img src="./home_files/kjcsNeqF52YUQ2rUBGLMHwLkxvR.jpg" alt="YOUR FRIENDLY NEIGHBORHOOD SPIDER-MAN (2025)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=solo-leveling-2024">
+                  <img src="./home_files/geCRueV3ElhRTr0xtJuEWJt6dJ1.jpg" alt="SOLOLEVELING (2024)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=motel-california-2025">
+                  <img src="./home_files/aFEIz6IuRc1aJTms22YKxx6548w.jpg" alt="MOTEL CALIFORNIA (2025)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=when-the-stars-gossip-2025">
+                  <img src="./home_files/pdOiUbJ0vEJfh5OGFG8y1e4InQ7.jpg" alt="WHEN THE STARS GOSSIP(2025)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=american-primeval-2025">
+                  <img src="./home_files/ff0s9OHGNSZL6cVteIb7LNvTnJD.jpg" alt="AMERICAN PRIMEVAL (2025)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=sas-rogue-heroes-2022">
+                  <img src="./home_files/qEaxiDrPaTY34eIg6naXMfM2IKC.jpg" alt="SAS ROUGUE HEROES (2022)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=mr-plankton-2024">
+                  <img src="./home_files/c31cvdNNiAMvb4XVjAwYLNn3LNO.jpg" alt="MR. PLANKTON (2024)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=sakamoto-days-2025">
+                  <img src="./home_files/lBOHMPWetQprntjjtGquHwIHSvx.jpg" alt="SAKAMOTO DAYS (2025)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=Alice%20in%20Borderland%20(2020)">
+                  <img src="./home_files/c6d050ae61d8119027d993eda7fb4963.jpg" alt="Alice in Borderland (2020)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=la-palma-2024">
+                  <img src="./home_files/lnFqXgpG0vpstspzsC4bW70YgYw.jpg" alt="LA PALMA(2024)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=go-ahead-brother-2024">
+                  <img src="./home_files/x6ei6X4uOc5OXBAIbB7uvCXSgxS.jpg" alt="GO AHEAD, BROTHER (2024)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=newtopia-2025">
+                  <img src="./home_files/hP9bsI2B7HONwDrzoNw5Q3QJMqU.jpg" alt="NEWTOPIA (2025)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=all-of-us-are-dead-2022">
+                  <img src="./home_files/f5ac04df8f9a5d3386a4e1138ca5f314.jpg" alt="ALL OF US ARE DEAD (2022)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=moving-2023">
+                  <img src="./home_files/e2e76b58e38f45bbfd72fed7385107b9.jpg" alt="MOVING (2023)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=the-uncanny-counter-2020">
+                  <img src="./home_files/ddd85ee26ce5cf09a08411756b1e6f85.jpg" alt="THE UNCANNY COUNTER (2020)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=vigilante-2023">
+                  <img src="./home_files/a03ab7df5876174f3ee5d82a84c3dd4e.jpg" alt="VIGILANTE(2023)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=one-piece-2023">
+                  <img src="./home_files/c2a75722c895f668cb1c6ae53d293236.jpg" alt="ONE PIECE (2023)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=senna-2024">
+                  <img src="./home_files/yxkrrtyOzx36uHowqYB3Ec8b9wg.jpg" alt="SENNA (2024)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=the-boys-2019">
+                  <img src="./home_files/2zmTngn1tYC1AvfnrFLhxeD82hz.jpg" alt="THE BOYS (2019)" class="movie-list-item-img">
+                </a>
+              </div>
+                          <div class="movie-list-item">
+                <a href="http://localhost/websiteMovie/detail.php?slug=dream-productions-2024">
+                  <img src="./home_files/j9jz5wZlQoq65YuYPNauB72uvFJ.jpg" alt="DREAM PRODUCTIONS (2024)" class="movie-list-item-img">
+                </a>
+              </div>
+                      </div>
+          <i class="fas fa-chevron-right arrow"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer (Hanya tampil di desktop/tablet, disembunyikan di mobile) -->
+    <footer class="footer">
+      <div>
+        <div class="logo">Layar Cinema</div>
+        <p class="desc">
+          Website ini dirancang sebagai platform bagi para pecinta film untuk melihat trailer terbaru dan mengetahui rating film sebelum menontonnya. 
+          Dengan tampilan yang user-friendly dan fitur pencarian yang intuitif, pengguna dapat dengan mudah menemukan film
+          favorit mereka berdasarkan genre, tahun rilis, atau popularitas.
+        </p>
+      </div>
+      <div class="column">
+        <h3>Original Series</h3>
+        <a href="https://tv.apple.com/">Apple TV+</a>
+        <a href="https://www.disneyplus.com/">Disney+</a>
+        <a href="https://www.max.com/">HBO</a>
+        <a href="https://www.netflix.com/">Netflix</a>
+        <a href="https://www.idlix.com/">IDLIX</a>
+      </div>
+      <div class="column">
+        <h3>Category</h3>
+        <a href="http://localhost/websiteMovie/index-movie.php">Movie</a>
+        <a href="http://localhost/websiteMovie/index-series.php">Series</a>
+      </div>
+      <div class="column">
+        <h3>IDLIX</h3>
+        <a href="https://vip.idlixvip.asia/tag/dc-movies/">DCEU Movie</a>
+        <a href="https://vip.idlixvip.asia/tag/marvel/">MCU Movie</a>
+        <a href="https://vip.idlixvip.asia/tag/disney/">Disney+ Movie and Series</a>
+        <a href="https://vip.idlixvip.asia/tag/netflix/">Netflix Movie and Series</a>
+      </div>
+    </footer>
+    <div class="and-text">
+      <p>Chopyright @ 2025 by Layar Cinema. All Rights Reserved.</p>
+    </div>
+  </div>
+  
+  <script>
+    // Fungsi toggle untuk mobile sidebar
+    function toggleMobileSidebar() {
+      const mobileSidebar = document.getElementById("mobileSidebar");
+      mobileSidebar.classList.toggle("active");
+    }
+
+    // Slider Arrow Functionality
+    document.addEventListener("DOMContentLoaded", function () {
+      const arrowsRight = document.querySelectorAll(".arrow");
+      const arrowsLeft = document.querySelectorAll(".arrow-left");
+      const movieLists = document.querySelectorAll(".movie-list");
+
+      arrowsRight.forEach((arrow, i) => {
+        arrow.addEventListener("click", () => {
+          const wrapperWidth = movieLists[i].parentElement.offsetWidth;
+          const listWidth = movieLists[i].scrollWidth;
+          const maxScroll = listWidth - wrapperWidth;
+
+          let currentTransform = parseInt(
+            movieLists[i].style.transform.replace("translateX(", "").replace("px)", "")
+          ) || 0;
+          
+          let newTransform = currentTransform - 230;
+          if (Math.abs(newTransform) > maxScroll) {
+            newTransform = -maxScroll;
+          }
+          movieLists[i].style.transform = `translateX(${newTransform}px)`;
+        });
+      });
+
+      arrowsLeft.forEach((arrow, i) => {
+        arrow.addEventListener("click", () => {
+          let currentTransform = parseInt(
+            movieLists[i].style.transform.replace("translateX(", "").replace("px)", "")
+          ) || 0;
+          
+          let newTransform = currentTransform + 230;
+          if (newTransform > 0) {
+            newTransform = 0;
+          }
+          movieLists[i].style.transform = `translateX(${newTransform}px)`;
+        });
+      });
+    });
+  </script>
+
+
+</body></html>

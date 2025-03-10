@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<!-- saved from url=(0055)http://localhost/websiteMovie/search-index.php?search=a -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="./search-home_files/design.css">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layar Cinema</title>
+    <link rel="icon" href="http://localhost/websiteMovie/logo.jpg" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+    <link href="./search-home_files/css2" rel="stylesheet">
+    <link href="./search-home_files/css2(1)" rel="stylesheet">
+    <link rel="stylesheet" href="./search-home_files/all.min.css">
+    <link rel="stylesheet" href="./search-home_files/remixicon.css">
+<style>
+    /* CSS yang sudah ada */
+    * {
+        margin: 0;
+    }
+    body {
+        font-family: "Roboto", sans-serif;
+        background-color: #151515;
+    }
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 50px;
+        z-index: 1000;
+        background-color: rgb(0, 0, 0);
+        position: sticky;
+        top: 0;
+    }
+    .navbar-container {
+        display: flex;
+        align-items: center;
+        padding: 0 50px;
+        height: 100%;
+        color: white;
+        font-family: "Sen", sans-serif;
+    }
+    .logo-container {
+        flex: 3;
+    }
+    .logo {
+        font-size: 30px;
+        color: rgb(255, 0, 0);
+    }
+    .menu-container {
+        flex: 8;
+    }
+    .menu-list {
+        display: flex;
+        list-style: none;
+    }
+    .menu-list-item {
+        margin-right: 80px;
+    }
+    .menu-list-item a {
+        text-decoration: none;
+        cursor: pointer;
+        outline: none;
+        border: none;
+        color: white;
+        transition: all 0.2s ease-in-out;
+    }
+    .menu-list-item a:hover {
+        color: rgb(255, 0, 0);
+    }
+    .menu-list-item.active {
+        font-weight: bold;
+    }
+    /* Form Pencarian di dalam Navbar */
+    .search-container-navbar {
+        flex: 3;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin-left: 20px;
+    }
+    .search-container-navbar form {
+        position: relative;
+        width: 300px;
+        height: 40px;
+        background-color: #fff;
+        border-radius: 25px;
+        display: flex;
+        align-items: center;
+        padding: 0 10px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .search-container-navbar form input[type="text"] {
+        width: 100%;
+        border: none;
+        outline: none;
+        border-radius: 25px;
+        font-size: 14px;
+        padding: 10px 15px;
+        color: #333;
+    }
+    .search-container-navbar form button {
+        background: none;
+        border: none;
+        color: #ff0000;
+        cursor: pointer;
+        font-size: 18px;
+    }
+    /* Not Found Container */
+    .not-found-container {
+        text-align: center;
+        color: #bbb;
+        font-family: Arial, sans-serif;
+        padding: 20px;
+    }
+    .not-found-container h2 {
+        font-size: 24px;
+        font-weight: normal;
+        color: #999;
+    }
+    .not-found-container h2 strong {
+        color: #999;
+    }
+    .not-found-container .help-section {
+        text-align: left;
+        max-width: 700px;
+        margin: 20px auto;
+    }
+    .not-found-container .help-section h3 {
+        margin-left: 17px;
+        font-size: 24px;
+        font-weight: bold;
+        color: #999;
+    }
+    .not-found-container .help-section ul {
+        margin-left: 30px;
+        list-style-type: square;
+        padding-left: 20px;
+    }
+    .not-found-container .help-section ul li {
+        font-size: 14px;
+        color: #999;
+        margin-bottom: 10px;
+    }
+    .not-found-container .help-section ul li strong {
+        color: #ccc;
+    }
+    /* Container */
+    .container {
+        background-color: #151515;
+        min-height: calc(100vh - 50px);
+        color: white;
+        padding-top: 60px;
+    }
+    .search-bar {
+        padding: 10px;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+    }
+    .search-bar input {
+        flex-grow: 1;
+        background: transparent;
+        border: none;
+        color: white;
+        padding: 5px;
+    }
+    .search-bar button {
+        background: none;
+        border: none;
+        color: white;
+        cursor: pointer;
+    }
+    .search-bar h4 {
+        font-size: 20px;
+    }
+    .movie-card {
+        background: #1e1e1e;
+        padding: 15px;
+        gap: 15px;
+        display: flex;
+        align-items: center;
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+    }
+    .movie-card img {
+        width: 100px;
+        height: auto;
+        border-radius: 5px;
+    }
+    .movie-card .ms-3 h5 {
+        font-size: 20px; 
+        color: white;     
+        margin-bottom: 5px; 
+        transition: all 0.2s ease-in-out;
+    }
+
+    .movie-card .ms-3 h5:hover{
+      color: rgb(255, 0, 0);
+    }
+
+    .movie-card .ms-3 p {
+        font-size: 14px; 
+        color: gray;     
+        margin: 2px 0;    
+    }
+    .category-badge {
+        padding: 0px 8px;
+        border-radius: 5px;
+        font-size: 13px;
+    }
+    .movie {
+        background-color: green;
+    }
+    .tv {
+        background-color: red;
+    }
+    .season {
+        background-color: purple;
+    }
+    .title {
+        color: rgba(255, 0, 0, 0.51);
+        font-size: 15px;
+        text-align: center;
+        font-family: "Bungee", serif;
+        margin-top: 25px;
+        padding: 10px;
+        border-bottom: 5px solid rgba(208, 208, 208, 0.51);
+    }
+    @media only screen and (max-width: 940px) {
+        .menu-container {
+            display: none;
+        }
+    }
+</style></head>
+
+
+<body>
+    <div class="navbar">
+        <div class="navbar-container">
+            <div class="logo-container">
+                <h1 class="logo">Layar Cinema |</h1>
+            </div>
+            <div class="menu-container">
+                <ul class="menu-list">
+                    <li class="menu-list-item active"><a href="http://localhost/websiteMovie/index.php">Home</a></li>
+                    <li class="menu-list-item"><a href="http://localhost/websiteMovie/index-movie.php">Movies</a></li>
+                    <li class="menu-list-item"><a href="http://localhost/websiteMovie/index-series.php">Series</a></li>
+                </ul>
+            </div>
+            <div class="search-container-navbar">
+                <form method="GET" action="http://localhost/websiteMovie/search-index.php">
+                    <input type="text" name="search" placeholder="Cari berdasarkan judul" required="" value="a">
+                    <button type="submit"><i class="fas fa-search"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <form method="GET" class="search-bar mb-4">
+            <h4>Result Found: a</h4>
+        </form>
+                    <div class="row">
+                                    <div class="col-12 mb-3">
+                        <div class="movie-card">
+                            <!-- Hanya poster (gambar) yang dapat diklik -->
+                            <a href="http://localhost/websiteMovie/detail.php?slug=squid-game-season2-2024" style="text-decoration:none; color:inherit;">
+                                <img src="./search-home_files/3811ea700879e3b7a8ada265e71a49cf.jpg" alt="SQUID GAME: SEASON 2 (2024)" class="movie-list-item-img">
+                            </a>
+                            <div class="ms-3">
+                                <!-- Hanya judul yang dapat diklik -->
+                                <a href="http://localhost/websiteMovie/detail.php?slug=squid-game-season2-2024" style="text-decoration:none; color:inherit;">
+                                    <h5>SQUID GAME: SEASON 2 (2024)</h5>
+                                </a>
+                                <p>Author: Hwang Dong-hyuk</p>
+                                <p class="category-badge series">
+                                    SERIES                                </p>
+                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-12 mb-3">
+                        <div class="movie-card">
+                            <!-- Hanya poster (gambar) yang dapat diklik -->
+                            <a href="http://localhost/websiteMovie/detail.php?slug=the-last-of-us-2023" style="text-decoration:none; color:inherit;">
+                                <img src="./search-home_files/829d865e040cf1ec0b39623fd4def07c.jpg" alt="THE LAST OF US (2023)" class="movie-list-item-img">
+                            </a>
+                            <div class="ms-3">
+                                <!-- Hanya judul yang dapat diklik -->
+                                <a href="http://localhost/websiteMovie/detail.php?slug=the-last-of-us-2023" style="text-decoration:none; color:inherit;">
+                                    <h5>THE LAST OF US (2023)</h5>
+                                </a>
+                                <p>Author: Craig Mazin &amp; Neil Druckmann </p>
+                                <p class="category-badge series">
+                                    SERIES                                </p>
+                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-12 mb-3">
+                        <div class="movie-card">
+                            <!-- Hanya poster (gambar) yang dapat diklik -->
+                            <a href="http://localhost/websiteMovie/detail.php?slug=gangnam-b-side-2024" style="text-decoration:none; color:inherit;">
+                                <img src="./search-home_files/e61307f96af3a8de8dc8fd02320294d1.jpg" alt="GANGNAM B-SIDE (2024)" class="movie-list-item-img">
+                            </a>
+                            <div class="ms-3">
+                                <!-- Hanya judul yang dapat diklik -->
+                                <a href="http://localhost/websiteMovie/detail.php?slug=gangnam-b-side-2024" style="text-decoration:none; color:inherit;">
+                                    <h5>GANGNAM B-SIDE (2024)</h5>
+                                </a>
+                                <p>Author: Park Noo-ri</p>
+                                <p class="category-badge series">
+                                    SERIES                                </p>
+                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-12 mb-3">
+                        <div class="movie-card">
+                            <!-- Hanya poster (gambar) yang dapat diklik -->
+                            <a href="http://localhost/websiteMovie/detail.php?slug=agatha-all-along-2024" style="text-decoration:none; color:inherit;">
+                                <img src="./search-home_files/bec2633a7c6b61162210dc002de37f5c.jpg" alt="AGATHA ALL ALONG (2024)" class="movie-list-item-img">
+                            </a>
+                            <div class="ms-3">
+                                <!-- Hanya judul yang dapat diklik -->
+                                <a href="http://localhost/websiteMovie/detail.php?slug=agatha-all-along-2024" style="text-decoration:none; color:inherit;">
+                                    <h5>AGATHA ALL ALONG (2024)</h5>
+                                </a>
+                                <p>Author: Jac Schaeffer</p>
+                                <p class="category-badge series">
+                                    SERIES                                </p>
+                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-12 mb-3">
+                        <div class="movie-card">
+                            <!-- Hanya poster (gambar) yang dapat diklik -->
+                            <a href="http://localhost/websiteMovie/detail.php?slug=the-hooligan-2025" style="text-decoration:none; color:inherit;">
+                                <img src="./search-home_files/vPva6bEwnrmgpNyHe8WDNkvxaav.jpg" alt="THE HOOLIGAN (2025)" class="movie-list-item-img">
+                            </a>
+                            <div class="ms-3">
+                                <!-- Hanya judul yang dapat diklik -->
+                                <a href="http://localhost/websiteMovie/detail.php?slug=the-hooligan-2025" style="text-decoration:none; color:inherit;">
+                                    <h5>THE HOOLIGAN (2025)</h5>
+                                </a>
+                                <p>Author: Dougie Brimson.</p>
+                                <p class="category-badge series">
+                                    SERIES                                </p>
+                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-12 mb-3">
+                        <div class="movie-card">
+                            <!-- Hanya poster (gambar) yang dapat diklik -->
+                            <a href="http://localhost/websiteMovie/detail.php?slug=the-trauma-code-heroes%20-on-call-2025" style="text-decoration:none; color:inherit;">
+                                <img src="./search-home_files/y8h2RwUZM5chv9tuaKVwSPoo3KE.jpg" alt="THE TRAUMA CODE: HEROES ON CALL (2025)" class="movie-list-item-img">
+                            </a>
+                            <div class="ms-3">
+                                <!-- Hanya judul yang dapat diklik -->
+                                <a href="http://localhost/websiteMovie/detail.php?slug=the-trauma-code-heroes%20-on-call-2025" style="text-decoration:none; color:inherit;">
+                                    <h5>THE TRAUMA CODE: HEROES ON CALL (2025)</h5>
+                                </a>
+                                <p>Author: Choi Tae-kang</p>
+                                <p class="category-badge series">
+                                    SERIES                                </p>
+                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-12 mb-3">
+                        <div class="movie-card">
+                            <!-- Hanya poster (gambar) yang dapat diklik -->
+                            <a href="http://localhost/websiteMovie/detail.php?slug=your-friendly-neighborhood-spider-man-2025" style="text-decoration:none; color:inherit;">
+                                <img src="./search-home_files/kjcsNeqF52YUQ2rUBGLMHwLkxvR.jpg" alt="YOUR FRIENDLY NEIGHBORHOOD SPIDER-MAN (2025)" class="movie-list-item-img">
+                            </a>
+                            <div class="ms-3">
+                                <!-- Hanya judul yang dapat diklik -->
+                                <a href="http://localhost/websiteMovie/detail.php?slug=your-friendly-neighborhood-spider-man-2025" style="text-decoration:none; color:inherit;">
+                                    <h5>YOUR FRIENDLY NEIGHBORHOOD SPIDER-MAN (2025)</h5>
+                                </a>
+                                <p>Author: Jeff Trammell</p>
+                                <p class="category-badge series">
+                                    SERIES                                </p>
+                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-12 mb-3">
+                        <div class="movie-card">
+                            <!-- Hanya poster (gambar) yang dapat diklik -->
+                            <a href="http://localhost/websiteMovie/detail.php?slug=motel-california-2025" style="text-decoration:none; color:inherit;">
+                                <img src="./search-home_files/aFEIz6IuRc1aJTms22YKxx6548w.jpg" alt="MOTEL CALIFORNIA (2025)" class="movie-list-item-img">
+                            </a>
+                            <div class="ms-3">
+                                <!-- Hanya judul yang dapat diklik -->
+                                <a href="http://localhost/websiteMovie/detail.php?slug=motel-california-2025" style="text-decoration:none; color:inherit;">
+                                    <h5>MOTEL CALIFORNIA (2025)</h5>
+                                </a>
+                                <p>Author: Shim Yoon Seo</p>
+                                <p class="category-badge series">
+                                    SERIES                                </p>
+                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-12 mb-3">
+                        <div class="movie-card">
+                            <!-- Hanya poster (gambar) yang dapat diklik -->
+                            <a href="http://localhost/websiteMovie/detail.php?slug=when-the-stars-gossip-2025" style="text-decoration:none; color:inherit;">
+                                <img src="./search-home_files/pdOiUbJ0vEJfh5OGFG8y1e4InQ7.jpg" alt="WHEN THE STARS GOSSIP(2025)" class="movie-list-item-img">
+                            </a>
+                            <div class="ms-3">
+                                <!-- Hanya judul yang dapat diklik -->
+                                <a href="http://localhost/websiteMovie/detail.php?slug=when-the-stars-gossip-2025" style="text-decoration:none; color:inherit;">
+                                    <h5>WHEN THE STARS GOSSIP(2025)</h5>
+                                </a>
+                                <p>Author: Lee Young Mi</p>
+                                <p class="category-badge series">
+                                    SERIES                                </p>
+                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-12 mb-3">
+                        <div class="movie-card">
+                            <!-- Hanya poster (gambar) yang dapat diklik -->
+                            <a href="http://localhost/websiteMovie/detail.php?slug=american-primeval-2025" style="text-decoration:none; color:inherit;">
+                                <img src="./search-home_files/ff0s9OHGNSZL6cVteIb7LNvTnJD.jpg" alt="AMERICAN PRIMEVAL (2025)" class="movie-list-item-img">
+                            </a>
+                            <div class="ms-3">
+                                <!-- Hanya judul yang dapat diklik -->
+                                <a href="http://localhost/websiteMovie/detail.php?slug=american-primeval-2025" style="text-decoration:none; color:inherit;">
+                                    <h5>AMERICAN PRIMEVAL (2025)</h5>
+                                </a>
+                                <p>Author: Mark L. Smith</p>
+                                <p class="category-badge series">
+                                    SERIES                                </p>
+                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-12 mb-3">
+                        <div class="movie-card">
+                            <!-- Hanya poster (gambar) yang dapat diklik -->
+                            <a href="http://localhost/websiteMovie/detail.php?slug=sas-rogue-heroes-2022" style="text-decoration:none; color:inherit;">
+                                <img src="./search-home_files/qEaxiDrPaTY34eIg6naXMfM2IKC.jpg" alt="SAS ROUGUE HEROES (2022)" class="movie-list-item-img">
+                            </a>
+                            <div class="ms-3">
+                                <!-- Hanya judul yang dapat diklik -->
+                                <a href="http://localhost/websiteMovie/detail.php?slug=sas-rogue-heroes-2022" style="text-decoration:none; color:inherit;">
+                                    <h5>SAS ROUGUE HEROES (2022)</h5>
+                                </a>
+                                <p>Author: Steven Knight</p>
+                                <p class="category-badge series">
+                                    SERIES                                </p>
+                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-12 mb-3">
+                        <div class="movie-card">
+                            <!-- Hanya poster (gambar) yang dapat diklik -->
+                            <a href="http://localhost/websiteMovie/detail.php?slug=mr-plankton-2024" style="text-decoration:none; color:inherit;">
+                                <img src="./search-home_files/c31cvdNNiAMvb4XVjAwYLNn3LNO.jpg" alt="MR. PLANKTON (2024)" class="movie-list-item-img">
+                            </a>
+                            <div class="ms-3">
+                                <!-- Hanya judul yang dapat diklik -->
+                                <a href="http://localhost/websiteMovie/detail.php?slug=mr-plankton-2024" style="text-decoration:none; color:inherit;">
+                                    <h5>MR. PLANKTON (2024)</h5>
+                                </a>
+                                <p>Author: Jo Yong</p>
+                                <p class="category-badge series">
+                                    SERIES                                </p>
+                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-12 mb-3">
+                        <div class="movie-card">
+                            <!-- Hanya poster (gambar) yang dapat diklik -->
+                            <a href="http://localhost/websiteMovie/detail.php?slug=sakamoto-days-2025" style="text-decoration:none; color:inherit;">
+                                <img src="./search-home_files/lBOHMPWetQprntjjtGquHwIHSvx.jpg" alt="SAKAMOTO DAYS (2025)" class="movie-list-item-img">
+                            </a>
+                            <div class="ms-3">
+                                <!-- Hanya judul yang dapat diklik -->
+                                <a href="http://localhost/websiteMovie/detail.php?slug=sakamoto-days-2025" style="text-decoration:none; color:inherit;">
+                                    <h5>SAKAMOTO DAYS (2025)</h5>
+                                </a>
+                                <p>Author:  Yuto Suzuki</p>
+                                <p class="category-badge series">
+                                    SERIES                                </p>
+                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-12 mb-3">
+                        <div class="movie-card">
+                            <!-- Hanya poster (gambar) yang dapat diklik -->
+                            <a href="http://localhost/websiteMovie/detail.php?slug=Alice%20in%20Borderland%20(2020)" style="text-decoration:none; color:inherit;">
+                                <img src="./search-home_files/c6d050ae61d8119027d993eda7fb4963.jpg" alt="Alice in Borderland (2020)" class="movie-list-item-img">
+                            </a>
+                            <div class="ms-3">
+                                <!-- Hanya judul yang dapat diklik -->
+                                <a href="http://localhost/websiteMovie/detail.php?slug=Alice%20in%20Borderland%20(2020)" style="text-decoration:none; color:inherit;">
+                                    <h5>Alice in Borderland (2020)</h5>
+                                </a>
+                                <p>Author: Yoshiki Watabe Yasuko Kuramitsu Shinsuke Sato</p>
+                                <p class="category-badge series">
+                                    SERIES                                </p>
+                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-12 mb-3">
+                        <div class="movie-card">
+                            <!-- Hanya poster (gambar) yang dapat diklik -->
+                            <a href="http://localhost/websiteMovie/detail.php?slug=la-palma-2024" style="text-decoration:none; color:inherit;">
+                                <img src="./search-home_files/lnFqXgpG0vpstspzsC4bW70YgYw.jpg" alt="LA PALMA(2024)" class="movie-list-item-img">
+                            </a>
+                            <div class="ms-3">
+                                <!-- Hanya judul yang dapat diklik -->
+                                <a href="http://localhost/websiteMovie/detail.php?slug=la-palma-2024" style="text-decoration:none; color:inherit;">
+                                    <h5>LA PALMA(2024)</h5>
+                                </a>
+                                <p>Author: Lars Gudmestad</p>
+                                <p class="category-badge series">
+                                    SERIES                                </p>
+                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-12 mb-3">
+                        <div class="movie-card">
+                            <!-- Hanya poster (gambar) yang dapat diklik -->
+                            <a href="http://localhost/websiteMovie/detail.php?slug=go-ahead-brother-2024" style="text-decoration:none; color:inherit;">
+                                <img src="./search-home_files/x6ei6X4uOc5OXBAIbB7uvCXSgxS.jpg" alt="GO AHEAD, BROTHER (2024)" class="movie-list-item-img">
+                            </a>
+                            <div class="ms-3">
+                                <!-- Hanya judul yang dapat diklik -->
+                                <a href="http://localhost/websiteMovie/detail.php?slug=go-ahead-brother-2024" style="text-decoration:none; color:inherit;">
+                                    <h5>GO AHEAD, BROTHER (2024)</h5>
+                                </a>
+                                <p>Author: Piotr Witkowski &amp; Konrad Eleryk</p>
+                                <p class="category-badge series">
+                                    SERIES                                </p>
+                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-12 mb-3">
+                        <div class="movie-card">
+                            <!-- Hanya poster (gambar) yang dapat diklik -->
+                            <a href="http://localhost/websiteMovie/detail.php?slug=newtopia-2025" style="text-decoration:none; color:inherit;">
+                                <img src="./search-home_files/hP9bsI2B7HONwDrzoNw5Q3QJMqU.jpg" alt="NEWTOPIA (2025)" class="movie-list-item-img">
+                            </a>
+                            <div class="ms-3">
+                                <!-- Hanya judul yang dapat diklik -->
+                                <a href="http://localhost/websiteMovie/detail.php?slug=newtopia-2025" style="text-decoration:none; color:inherit;">
+                                    <h5>NEWTOPIA (2025)</h5>
+                                </a>
+                                <p>Author: Han Ji-won</p>
+                                <p class="category-badge series">
+                                    SERIES                                </p>
+                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-12 mb-3">
+                        <div class="movie-card">
+                            <!-- Hanya poster (gambar) yang dapat diklik -->
+                            <a href="http://localhost/websiteMovie/detail.php?slug=all-of-us-are-dead-2022" style="text-decoration:none; color:inherit;">
+                                <img src="./search-home_files/f5ac04df8f9a5d3386a4e1138ca5f314.jpg" alt="ALL OF US ARE DEAD (2022)" class="movie-list-item-img">
+                            </a>
+                            <div class="ms-3">
+                                <!-- Hanya judul yang dapat diklik -->
+                                <a href="http://localhost/websiteMovie/detail.php?slug=all-of-us-are-dead-2022" style="text-decoration:none; color:inherit;">
+                                    <h5>ALL OF US ARE DEAD (2022)</h5>
+                                </a>
+                                <p>Author: Chun Sung Il</p>
+                                <p class="category-badge series">
+                                    SERIES                                </p>
+                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-12 mb-3">
+                        <div class="movie-card">
+                            <!-- Hanya poster (gambar) yang dapat diklik -->
+                            <a href="http://localhost/websiteMovie/detail.php?slug=the-uncanny-counter-2020" style="text-decoration:none; color:inherit;">
+                                <img src="./search-home_files/ddd85ee26ce5cf09a08411756b1e6f85.jpg" alt="THE UNCANNY COUNTER (2020)" class="movie-list-item-img">
+                            </a>
+                            <div class="ms-3">
+                                <!-- Hanya judul yang dapat diklik -->
+                                <a href="http://localhost/websiteMovie/detail.php?slug=the-uncanny-counter-2020" style="text-decoration:none; color:inherit;">
+                                    <h5>THE UNCANNY COUNTER (2020)</h5>
+                                </a>
+                                <p>Author: Yeo Ji-na</p>
+                                <p class="category-badge series">
+                                    SERIES                                </p>
+                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-12 mb-3">
+                        <div class="movie-card">
+                            <!-- Hanya poster (gambar) yang dapat diklik -->
+                            <a href="http://localhost/websiteMovie/detail.php?slug=vigilante-2023" style="text-decoration:none; color:inherit;">
+                                <img src="./search-home_files/a03ab7df5876174f3ee5d82a84c3dd4e.jpg" alt="VIGILANTE(2023)" class="movie-list-item-img">
+                            </a>
+                            <div class="ms-3">
+                                <!-- Hanya judul yang dapat diklik -->
+                                <a href="http://localhost/websiteMovie/detail.php?slug=vigilante-2023" style="text-decoration:none; color:inherit;">
+                                    <h5>VIGILANTE(2023)</h5>
+                                </a>
+                                <p>Author: Moon Yoo Seok</p>
+                                <p class="category-badge series">
+                                    SERIES                                </p>
+                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-12 mb-3">
+                        <div class="movie-card">
+                            <!-- Hanya poster (gambar) yang dapat diklik -->
+                            <a href="http://localhost/websiteMovie/detail.php?slug=senna-2024" style="text-decoration:none; color:inherit;">
+                                <img src="./search-home_files/yxkrrtyOzx36uHowqYB3Ec8b9wg.jpg" alt="SENNA (2024)" class="movie-list-item-img">
+                            </a>
+                            <div class="ms-3">
+                                <!-- Hanya judul yang dapat diklik -->
+                                <a href="http://localhost/websiteMovie/detail.php?slug=senna-2024" style="text-decoration:none; color:inherit;">
+                                    <h5>SENNA (2024)</h5>
+                                </a>
+                                <p>Author: Vicente Amorim dan Júlia Rezende</p>
+                                <p class="category-badge series">
+                                    SERIES                                </p>
+                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-12 mb-3">
+                        <div class="movie-card">
+                            <!-- Hanya poster (gambar) yang dapat diklik -->
+                            <a href="http://localhost/websiteMovie/detail.php?slug=dream-productions-2024" style="text-decoration:none; color:inherit;">
+                                <img src="./search-home_files/j9jz5wZlQoq65YuYPNauB72uvFJ.jpg" alt="DREAM PRODUCTIONS (2024)" class="movie-list-item-img">
+                            </a>
+                            <div class="ms-3">
+                                <!-- Hanya judul yang dapat diklik -->
+                                <a href="http://localhost/websiteMovie/detail.php?slug=dream-productions-2024" style="text-decoration:none; color:inherit;">
+                                    <h5>DREAM PRODUCTIONS (2024)</h5>
+                                </a>
+                                <p>Author: Paula Persimmon</p>
+                                <p class="category-badge series">
+                                    SERIES                                </p>
+                            </div>
+                        </div>
+                    </div>
+                            </div>
+            <div class="row">
+                                    <div class="col-12 mb-3">
+                        <div class="movie-card">
+                            <!-- Hanya poster (gambar) yang dapat diklik -->
+                            <a href="http://localhost/websiteMovie/detail.php?slug=kraven-the-hunter-2024" style="text-decoration:none; color:inherit;">
+                                <img src="./search-home_files/1573d3a129bf7d87383b28841be10852.jpg" alt=" KRAVEN THE HUNTER (2024)" class="movie-list-item-img">
+                            </a>
+                            <div class="ms-3">
+                                <!-- Hanya judul yang dapat diklik -->
+                                <a href="http://localhost/websiteMovie/detail.php?slug=kraven-the-hunter-2024" style="text-decoration:none; color:inherit;">
+                                    <h5> KRAVEN THE HUNTER (2024)</h5>
+                                </a>
+                                <p>Author: Richard Wenk</p>
+                                <p class="category-badge movies">
+                                    MOVIES                                </p>
+                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-12 mb-3">
+                        <div class="movie-card">
+                            <!-- Hanya poster (gambar) yang dapat diklik -->
+                            <a href="http://localhost/websiteMovie/detail.php?slug=mufasa-the-lion-king-2024" style="text-decoration:none; color:inherit;">
+                                <img src="./search-home_files/9ed8e583143eb3eb73666dde7fd74a13.jpg" alt="MUFASA: THE LION KING (2024)" class="movie-list-item-img">
+                            </a>
+                            <div class="ms-3">
+                                <!-- Hanya judul yang dapat diklik -->
+                                <a href="http://localhost/websiteMovie/detail.php?slug=mufasa-the-lion-king-2024" style="text-decoration:none; color:inherit;">
+                                    <h5>MUFASA: THE LION KING (2024)</h5>
+                                </a>
+                                <p>Author: Barry Jenkins</p>
+                                <p class="category-badge movies">
+                                    MOVIES                                </p>
+                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-12 mb-3">
+                        <div class="movie-card">
+                            <!-- Hanya poster (gambar) yang dapat diklik -->
+                            <a href="http://localhost/websiteMovie/detail.php?slug=gladiator-II-2024" style="text-decoration:none; color:inherit;">
+                                <img src="./search-home_files/bfb16632e3fa58d077a7dcc5ccf92ce5.jpg" alt="GLADIATOR II (2024)" class="movie-list-item-img">
+                            </a>
+                            <div class="ms-3">
+                                <!-- Hanya judul yang dapat diklik -->
+                                <a href="http://localhost/websiteMovie/detail.php?slug=gladiator-II-2024" style="text-decoration:none; color:inherit;">
+                                    <h5>GLADIATOR II (2024)</h5>
+                                </a>
+                                <p>Author: Ridley Scott</p>
+                                <p class="category-badge movies">
+                                    MOVIES                                </p>
+                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-12 mb-3">
+                        <div class="movie-card">
+                            <!-- Hanya poster (gambar) yang dapat diklik -->
+                            <a href="http://localhost/websiteMovie/detail.php?slug=nosferatu-2024" style="text-decoration:none; color:inherit;">
+                                <img src="./search-home_files/4d32cd50b168db8abab8cb3015954aed.jpg" alt="NOSFERATU (2024)" class="movie-list-item-img">
+                            </a>
+                            <div class="ms-3">
+                                <!-- Hanya judul yang dapat diklik -->
+                                <a href="http://localhost/websiteMovie/detail.php?slug=nosferatu-2024" style="text-decoration:none; color:inherit;">
+                                    <h5>NOSFERATU (2024)</h5>
+                                </a>
+                                <p>Author: Robert Eggers</p>
+                                <p class="category-badge movies">
+                                    MOVIES                                </p>
+                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-12 mb-3">
+                        <div class="movie-card">
+                            <!-- Hanya poster (gambar) yang dapat diklik -->
+                            <a href="http://localhost/websiteMovie/detail.php?slug=venom-the-last-dance-2024" style="text-decoration:none; color:inherit;">
+                                <img src="./search-home_files/6fd864ffee03fa335127ce3f1d7ae310.jpg" alt="VENOM: THE LAST DANCE (2024)" class="movie-list-item-img">
+                            </a>
+                            <div class="ms-3">
+                                <!-- Hanya judul yang dapat diklik -->
+                                <a href="http://localhost/websiteMovie/detail.php?slug=venom-the-last-dance-2024" style="text-decoration:none; color:inherit;">
+                                    <h5>VENOM: THE LAST DANCE (2024)</h5>
+                                </a>
+                                <p>Author: Kelly Marcel</p>
+                                <p class="category-badge movies">
+                                    MOVIES                                </p>
+                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-12 mb-3">
+                        <div class="movie-card">
+                            <!-- Hanya poster (gambar) yang dapat diklik -->
+                            <a href="http://localhost/websiteMovie/detail.php?slug=despicable-me4-2024" style="text-decoration:none; color:inherit;">
+                                <img src="./search-home_files/b72e87cf45c1ee343ec21616537bac89.jpg" alt="DESPICABLE ME 4 (2024)" class="movie-list-item-img">
+                            </a>
+                            <div class="ms-3">
+                                <!-- Hanya judul yang dapat diklik -->
+                                <a href="http://localhost/websiteMovie/detail.php?slug=despicable-me4-2024" style="text-decoration:none; color:inherit;">
+                                    <h5>DESPICABLE ME 4 (2024)</h5>
+                                </a>
+                                <p>Author: Chris Renaud</p>
+                                <p class="category-badge movies">
+                                    MOVIES                                </p>
+                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-12 mb-3">
+                        <div class="movie-card">
+                            <!-- Hanya poster (gambar) yang dapat diklik -->
+                            <a href="http://localhost/websiteMovie/detail.php?slug=joker-folie-a-deux-2024" style="text-decoration:none; color:inherit;">
+                                <img src="./search-home_files/20cabbef7e27fd76e70d1e4876ad4c72.jpg" alt="JOKER: FOLIE A DEUX (2024)" class="movie-list-item-img">
+                            </a>
+                            <div class="ms-3">
+                                <!-- Hanya judul yang dapat diklik -->
+                                <a href="http://localhost/websiteMovie/detail.php?slug=joker-folie-a-deux-2024" style="text-decoration:none; color:inherit;">
+                                    <h5>JOKER: FOLIE A DEUX (2024)</h5>
+                                </a>
+                                <p>Author: Todd Phillips</p>
+                                <p class="category-badge movies">
+                                    MOVIES                                </p>
+                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-12 mb-3">
+                        <div class="movie-card">
+                            <!-- Hanya poster (gambar) yang dapat diklik -->
+                            <a href="http://localhost/websiteMovie/detail.php?slug=my-fault-london-2025" style="text-decoration:none; color:inherit;">
+                                <img src="./search-home_files/ttN5D6GKOwKWHmCzDGctAvaNMAi.jpg" alt="MY FAULT: LONDON (2025)" class="movie-list-item-img">
+                            </a>
+                            <div class="ms-3">
+                                <!-- Hanya judul yang dapat diklik -->
+                                <a href="http://localhost/websiteMovie/detail.php?slug=my-fault-london-2025" style="text-decoration:none; color:inherit;">
+                                    <h5>MY FAULT: LONDON (2025)</h5>
+                                </a>
+                                <p>Author: Dani Girdwood dan Charlotte Fassler</p>
+                                <p class="category-badge movies">
+                                    MOVIES                                </p>
+                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-12 mb-3">
+                        <div class="movie-card">
+                            <!-- Hanya poster (gambar) yang dapat diklik -->
+                            <a href="http://localhost/websiteMovie/detail.php?slug=deadpool-wolverine-2024" style="text-decoration:none; color:inherit;">
+                                <img src="./search-home_files/ae3dddf605a6113b4dc7dc7b3826e931.jpg" alt="DEADPOOL &amp; WOLVERINE (2024)" class="movie-list-item-img">
+                            </a>
+                            <div class="ms-3">
+                                <!-- Hanya judul yang dapat diklik -->
+                                <a href="http://localhost/websiteMovie/detail.php?slug=deadpool-wolverine-2024" style="text-decoration:none; color:inherit;">
+                                    <h5>DEADPOOL &amp; WOLVERINE (2024)</h5>
+                                </a>
+                                <p>Author: Shawn Levy</p>
+                                <p class="category-badge movies">
+                                    MOVIES                                </p>
+                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-12 mb-3">
+                        <div class="movie-card">
+                            <!-- Hanya poster (gambar) yang dapat diklik -->
+                            <a href="http://localhost/websiteMovie/detail.php?slug=evil-dead-rise-2023" style="text-decoration:none; color:inherit;">
+                                <img src="./search-home_files/6f0ac5b524afdab44c2f0bd339339d8e.jpg" alt="EVIL DEAD RISE (2023)" class="movie-list-item-img">
+                            </a>
+                            <div class="ms-3">
+                                <!-- Hanya judul yang dapat diklik -->
+                                <a href="http://localhost/websiteMovie/detail.php?slug=evil-dead-rise-2023" style="text-decoration:none; color:inherit;">
+                                    <h5>EVIL DEAD RISE (2023)</h5>
+                                </a>
+                                <p>Author: Lee Cronin</p>
+                                <p class="category-badge movies">
+                                    MOVIES                                </p>
+                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-12 mb-3">
+                        <div class="movie-card">
+                            <!-- Hanya poster (gambar) yang dapat diklik -->
+                            <a href="http://localhost/websiteMovie/detail.php?slug=fast-x-2023" style="text-decoration:none; color:inherit;">
+                                <img src="./search-home_files/6f9741d12b79288a0f632a358d21fc41.jpg" alt="FAST X (2023)" class="movie-list-item-img">
+                            </a>
+                            <div class="ms-3">
+                                <!-- Hanya judul yang dapat diklik -->
+                                <a href="http://localhost/websiteMovie/detail.php?slug=fast-x-2023" style="text-decoration:none; color:inherit;">
+                                    <h5>FAST X (2023)</h5>
+                                </a>
+                                <p>Author: Louis Leterrier</p>
+                                <p class="category-badge movies">
+                                    MOVIES                                </p>
+                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-12 mb-3">
+                        <div class="movie-card">
+                            <!-- Hanya poster (gambar) yang dapat diklik -->
+                            <a href="http://localhost/websiteMovie/detail.php?slug=aquaman-and-the-lost-kingdom-2023" style="text-decoration:none; color:inherit;">
+                                <img src="./search-home_files/b81fb171542b10350a6ef14b3fca3450.jpg" alt="AQUAMAN AND THE LOST KINGDOM (2023)" class="movie-list-item-img">
+                            </a>
+                            <div class="ms-3">
+                                <!-- Hanya judul yang dapat diklik -->
+                                <a href="http://localhost/websiteMovie/detail.php?slug=aquaman-and-the-lost-kingdom-2023" style="text-decoration:none; color:inherit;">
+                                    <h5>AQUAMAN AND THE LOST KINGDOM (2023)</h5>
+                                </a>
+                                <p>Author: James Wan</p>
+                                <p class="category-badge movies">
+                                    MOVIES                                </p>
+                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-12 mb-3">
+                        <div class="movie-card">
+                            <!-- Hanya poster (gambar) yang dapat diklik -->
+                            <a href="http://localhost/websiteMovie/detail.php?slug=kung-fu-panda-4-2024" style="text-decoration:none; color:inherit;">
+                                <img src="./search-home_files/8be1b64a292cfd7c1864389c2ac8bb3d.jpg" alt="KUNG FU PANDA 4 (2024)" class="movie-list-item-img">
+                            </a>
+                            <div class="ms-3">
+                                <!-- Hanya judul yang dapat diklik -->
+                                <a href="http://localhost/websiteMovie/detail.php?slug=kung-fu-panda-4-2024" style="text-decoration:none; color:inherit;">
+                                    <h5>KUNG FU PANDA 4 (2024)</h5>
+                                </a>
+                                <p>Author: Mike Mitchell</p>
+                                <p class="category-badge movies">
+                                    MOVIES                                </p>
+                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-12 mb-3">
+                        <div class="movie-card">
+                            <!-- Hanya poster (gambar) yang dapat diklik -->
+                            <a href="http://localhost/websiteMovie/detail.php?slug=godzilla-kong-the-new-empire-2024" style="text-decoration:none; color:inherit;">
+                                <img src="./search-home_files/4989301524a62d37238ff2da462b7b40.jpg" alt="GODZILLA x KONG: THE NEW EMPIRE (2024)" class="movie-list-item-img">
+                            </a>
+                            <div class="ms-3">
+                                <!-- Hanya judul yang dapat diklik -->
+                                <a href="http://localhost/websiteMovie/detail.php?slug=godzilla-kong-the-new-empire-2024" style="text-decoration:none; color:inherit;">
+                                    <h5>GODZILLA x KONG: THE NEW EMPIRE (2024)</h5>
+                                </a>
+                                <p>Author: Adam Wingard</p>
+                                <p class="category-badge movies">
+                                    MOVIES                                </p>
+                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-12 mb-3">
+                        <div class="movie-card">
+                            <!-- Hanya poster (gambar) yang dapat diklik -->
+                            <a href="http://localhost/websiteMovie/detail.php?slug=elemental-2023" style="text-decoration:none; color:inherit;">
+                                <img src="./search-home_files/aed88f1d2f811cc367156192d9ea904a.jpg" alt="ELEMENTAL (2023)" class="movie-list-item-img">
+                            </a>
+                            <div class="ms-3">
+                                <!-- Hanya judul yang dapat diklik -->
+                                <a href="http://localhost/websiteMovie/detail.php?slug=elemental-2023" style="text-decoration:none; color:inherit;">
+                                    <h5>ELEMENTAL (2023)</h5>
+                                </a>
+                                <p>Author: Peter Sohn</p>
+                                <p class="category-badge movies">
+                                    MOVIES                                </p>
+                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-12 mb-3">
+                        <div class="movie-card">
+                            <!-- Hanya poster (gambar) yang dapat diklik -->
+                            <a href="http://localhost/websiteMovie/detail.php?slug=valiant-one-2025" style="text-decoration:none; color:inherit;">
+                                <img src="./search-home_files/776e831165eadcb7bfcee93005e9d43b.jpg" alt="VALIANT ONE (2025)" class="movie-list-item-img">
+                            </a>
+                            <div class="ms-3">
+                                <!-- Hanya judul yang dapat diklik -->
+                                <a href="http://localhost/websiteMovie/detail.php?slug=valiant-one-2025" style="text-decoration:none; color:inherit;">
+                                    <h5>VALIANT ONE (2025)</h5>
+                                </a>
+                                <p>Author: Daniel Myrick</p>
+                                <p class="category-badge movies">
+                                    MOVIES                                </p>
+                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-12 mb-3">
+                        <div class="movie-card">
+                            <!-- Hanya poster (gambar) yang dapat diklik -->
+                            <a href="http://localhost/websiteMovie/detail.php?slug=spider-man-no-way-home-2021" style="text-decoration:none; color:inherit;">
+                                <img src="./search-home_files/faa8c2a6a5d681077d1ab02092a67766.jpg" alt="SPIDER-MAN: NO WAY HOME (2021)" class="movie-list-item-img">
+                            </a>
+                            <div class="ms-3">
+                                <!-- Hanya judul yang dapat diklik -->
+                                <a href="http://localhost/websiteMovie/detail.php?slug=spider-man-no-way-home-2021" style="text-decoration:none; color:inherit;">
+                                    <h5>SPIDER-MAN: NO WAY HOME (2021)</h5>
+                                </a>
+                                <p>Author: Chris McKenna &amp; Erik Sommers</p>
+                                <p class="category-badge movies">
+                                    MOVIES                                </p>
+                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-12 mb-3">
+                        <div class="movie-card">
+                            <!-- Hanya poster (gambar) yang dapat diklik -->
+                            <a href="http://localhost/websiteMovie/detail.php?slug=shang-chi-2021" style="text-decoration:none; color:inherit;">
+                                <img src="./search-home_files/91b31e070a20658fd193b93cfe7d8a7f.jpg" alt="SHANG-CHI AND THE LEGEND OF THE TEN RINGS (2021)" class="movie-list-item-img">
+                            </a>
+                            <div class="ms-3">
+                                <!-- Hanya judul yang dapat diklik -->
+                                <a href="http://localhost/websiteMovie/detail.php?slug=shang-chi-2021" style="text-decoration:none; color:inherit;">
+                                    <h5>SHANG-CHI AND THE LEGEND OF THE TEN RINGS (2021)</h5>
+                                </a>
+                                <p>Author: Destin Daniel Cretton</p>
+                                <p class="category-badge movies">
+                                    MOVIES                                </p>
+                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-12 mb-3">
+                        <div class="movie-card">
+                            <!-- Hanya poster (gambar) yang dapat diklik -->
+                            <a href="http://localhost/websiteMovie/detail.php?slug=black-panther-wakanda-forever-2022" style="text-decoration:none; color:inherit;">
+                                <img src="./search-home_files/cce3a89057e39541408276c70f1f3c5c.jpg" alt="BLACK PANTHER: WAKANDA FOREVER (2022)" class="movie-list-item-img">
+                            </a>
+                            <div class="ms-3">
+                                <!-- Hanya judul yang dapat diklik -->
+                                <a href="http://localhost/websiteMovie/detail.php?slug=black-panther-wakanda-forever-2022" style="text-decoration:none; color:inherit;">
+                                    <h5>BLACK PANTHER: WAKANDA FOREVER (2022)</h5>
+                                </a>
+                                <p>Author: Ryan Coogler</p>
+                                <p class="category-badge movies">
+                                    MOVIES                                </p>
+                            </div>
+                        </div>
+                    </div>
+                            </div>
+            </div>
+    <script src="./search-home_files/app.js.download"></script>
+
+</body></html>

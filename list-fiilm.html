@@ -1,0 +1,1655 @@
+<!DOCTYPE html>
+<!-- saved from url=(0051)http://localhost/websiteMovie/admin-crud-movies.php -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halaman Admin</title>
+    <link rel="icon" href="http://localhost/websiteMovie/logo.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="./list-fiilm_files/remixicon.css">
+    <link rel="stylesheet" href="./list-fiilm_files/css-pro-layout.css">
+    <link rel="stylesheet" href="./list-fiilm_files/css2">
+    <style>
+        .layout {
+  z-index: 1;
+}
+.layout .header {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+}
+.layout .content {
+  padding: 12px 50px;
+  display: flex;
+  flex-direction: column;
+}
+.layout .footer {
+  text-align: center;
+  margin-top: auto;
+  margin-bottom: 20px;
+  padding: 20px;
+}
+
+.sidebar {
+  color: #000;
+  overflow-x: hidden !important;
+  position: relative;
+}
+.sidebar::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+}
+.sidebar:hover::-webkit-scrollbar-thumb {
+  background-color: #1a4173;
+}
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+  background-color: #0c1e35;
+}
+.sidebar .image-wrapper {
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  display: none;
+}
+.sidebar .image-wrapper > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.sidebar.has-bg-image .image-wrapper {
+  display: block;
+}
+.sidebar .sidebar-layout {
+            height: auto;
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            backdrop-filter: blur(15px);
+            border: 1px solid;
+            border-top: transparent;
+            border-left: transparent;
+            border-bottom: transparent;
+            background-color: rgba(55, 55, 55, 0.1);
+            /* background-color: #0c1e35; */
+            z-index: 2;
+        }
+
+.sidebar .sidebar-layout .sidebar-header {
+  height: 100px;
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+}
+.sidebar .sidebar-layout .sidebar-header > span {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.sidebar .sidebar-layout .sidebar-content {
+  flex-grow: 1;
+  padding: 10px 0;
+}
+.sidebar .sidebar-layout .sidebar-footer {
+  height: 230px;
+  min-height: 230px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+}
+.sidebar .sidebar-layout .sidebar-footer > span {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@keyframes swing {
+  0%, 30%, 50%, 70%, 100% {
+    transform: rotate(0deg);
+  }
+  10% {
+    transform: rotate(10deg);
+  }
+  40% {
+    transform: rotate(-10deg);
+  }
+  60% {
+    transform: rotate(5deg);
+  }
+  80% {
+    transform: rotate(-5deg);
+  }
+}
+.layout .sidebar .menu ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+.layout .sidebar .menu .menu-header {
+  font-weight: 600;
+  padding: 10px 25px;
+  font-size: 0.8em;
+  letter-spacing: 2px;
+  transition: opacity 0.3s;
+  opacity: 0.5;
+}
+.layout .sidebar .menu .menu-item a {
+  display: flex;
+  align-items: center;
+  height: 50px;
+  padding: 0 20px;
+  color: #000;
+}
+.layout .sidebar .menu .menu-item a .menu-icon {
+  font-size: 1.2rem;
+  width: 35px;
+  min-width: 35px;
+  height: 35px;
+  line-height: 35px;
+  text-align: center;
+  display: inline-block;
+  margin-right: 10px;
+  border-radius: 2px;
+  transition: color 0.3s;
+}
+.layout .sidebar .menu .menu-item a .menu-icon i {
+  display: inline-block;
+}
+.layout .sidebar .menu .menu-item a .menu-title {
+  font-size: 0.9em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex-grow: 1;
+  transition: color 0.3s;
+}
+.layout .sidebar .menu .menu-item a .menu-prefix,
+.layout .sidebar .menu .menu-item a .menu-suffix {
+  display: inline-block;
+  padding: 5px;
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+.layout .sidebar .menu .menu-item a:hover .menu-title {
+  color: #000;
+}
+.layout .sidebar .menu .menu-item a:hover .menu-icon {
+  color: #000;
+}
+.layout .sidebar .menu .menu-item a:hover .menu-icon i {
+  animation: swing ease-in-out 0.5s 1 alternate;
+}
+.layout .sidebar .menu .menu-item a:hover::after {
+  border-color: #000 !important;
+}
+.layout .sidebar .menu .menu-item.sub-menu {
+  position: relative;
+}
+.layout .sidebar .menu .menu-item.sub-menu > a::after {
+  content: "";
+  transition: transform 0.3s;
+  border-right: 2px solid currentcolor;
+  border-bottom: 2px solid currentcolor;
+  width: 5px;
+  height: 5px;
+  transform: rotate(-45deg);
+}
+.layout .sidebar .menu .menu-item.sub-menu > .sub-menu-list {
+  padding-left: 20px;
+  display: none;
+  overflow: hidden;
+  z-index: 999;
+}
+.layout .sidebar .menu .menu-item.sub-menu.open > a {
+  color: #000;
+}
+.layout .sidebar .menu .menu-item.sub-menu.open > a::after {
+  transform: rotate(45deg);
+}
+.layout .sidebar .menu .menu-item.active > a .menu-title {
+  color: #000;
+}
+.layout .sidebar .menu .menu-item.active > a::after {
+  border-color: #000;
+}
+.layout .sidebar .menu .menu-item.active > a .menu-icon {
+  color: #000;
+}
+.layout .sidebar .menu > ul > .sub-menu > .sub-menu-list {
+  background-color: #0b1a2c;
+}
+.layout .sidebar .menu.icon-shape-circle .menu-item a .menu-icon, .layout .sidebar .menu.icon-shape-rounded .menu-item a .menu-icon, .layout .sidebar .menu.icon-shape-square .menu-item a .menu-icon {
+  background-color: #0b1a2c;
+}
+.layout .sidebar .menu.icon-shape-circle .menu-item a .menu-icon {
+  border-radius: 50%;
+}
+.layout .sidebar .menu.icon-shape-rounded .menu-item a .menu-icon {
+  border-radius: 4px;
+}
+.layout .sidebar .menu.icon-shape-square .menu-item a .menu-icon {
+  border-radius: 0;
+}
+.layout .sidebar:not(.collapsed) .menu > ul > .menu-item.sub-menu > .sub-menu-list {
+  visibility: visible !important;
+  position: static !important;
+  transform: translate(0, 0) !important;
+}
+.layout .sidebar.collapsed .menu > ul > .menu-header {
+  opacity: 0;
+}
+.layout .sidebar.collapsed .menu > ul > .menu-item > a .menu-prefix,
+.layout .sidebar.collapsed .menu > ul > .menu-item > a .menu-suffix {
+  opacity: 0;
+}
+.layout .sidebar.collapsed .menu > ul > .menu-item.sub-menu > a::after {
+  content: "";
+  width: 5px;
+  height: 5px;
+  background-color: currentcolor;
+  border-radius: 50%;
+  display: inline-block;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  border: none;
+  transform: translateY(-50%);
+}
+.layout .sidebar.collapsed .menu > ul > .menu-item.sub-menu > a:hover::after {
+  background-color: #000;
+}
+.layout .sidebar.collapsed .menu > ul > .menu-item.sub-menu > .sub-menu-list {
+  transition: none !important;
+  width: 200px;
+  margin-left: 3px !important;
+  border-radius: 4px;
+  display: block !important;
+}
+.layout .sidebar.collapsed .menu > ul > .menu-item.active > a::after {
+  background-color: #000;
+}
+.layout .sidebar.has-bg-image .menu.icon-shape-circle .menu-item a .menu-icon, .layout .sidebar.has-bg-image .menu.icon-shape-rounded .menu-item a .menu-icon, .layout .sidebar.has-bg-image .menu.icon-shape-square .menu-item a .menu-icon {
+  background-color: rgba(11, 26, 44, 0.6);
+}
+.layout .sidebar.has-bg-image:not(.collapsed) .menu > ul > .sub-menu > .sub-menu-list {
+  background-color: rgba(11, 26, 44, 0.6);
+}
+.layout.rtl .sidebar .menu .menu-item a .menu-icon {
+  margin-left: 10px;
+  margin-right: 0;
+}
+.layout.rtl .sidebar .menu .menu-item.sub-menu > a::after {
+  transform: rotate(135deg);
+}
+.layout.rtl .sidebar .menu .menu-item.sub-menu > .sub-menu-list {
+  padding-left: 0;
+  padding-right: 20px;
+}
+.layout.rtl .sidebar .menu .menu-item.sub-menu.open > a::after {
+  transform: rotate(45deg);
+}
+.layout.rtl .sidebar.collapsed .menu > ul > .menu-item.sub-menu a::after {
+  right: auto;
+  left: 10px;
+}
+.layout.rtl .sidebar.collapsed .menu > ul > .menu-item.sub-menu > .sub-menu-list {
+  margin-left: -3px !important;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+            margin: 0;
+            height: 100vh;
+            font-family: "Poppins", sans-serif;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            /* backdrop-filter: blur(1px); */
+            /* background-color: rgba(28, 26, 26, 0.6); */
+            color: #000;
+            font-size: 0.9rem;
+
+        }
+
+a {
+  text-decoration: none;
+}
+
+@media (max-width: 576px) {
+  #btn-collapse {
+    display: none;
+  }
+}
+.layout .sidebar .pro-sidebar-logo {
+  display: flex;
+  align-items: center;
+}
+.layout .sidebar .pro-sidebar-logo > div {
+  width: 35px;
+  min-width: 35px;
+  height: 35px;
+  min-height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  color: white;
+  font-size: 24px;
+  font-weight: 700;
+  background-color: #ff8100;
+  margin-right: 10px;
+}
+.layout .sidebar .pro-sidebar-logo > h5 {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 20px;
+  line-height: 30px;
+  transition: opacity 0.3s;
+  opacity: 1;
+}
+.layout .sidebar .footer-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.8em;
+  padding: 20px 0;
+  border-radius: 8px;
+  width: 180px;
+  min-width: 190px;
+  margin: 0 auto;
+  background-color: #162d4a;
+}
+.layout .sidebar .footer-box img.react-logo {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 10px;
+}
+.layout .sidebar .footer-box a {
+  color: #fff;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.layout .sidebar .sidebar-collapser {
+  transition: left, right, 0.3s;
+  position: fixed;
+  left: 260px;
+  top: 40px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #00829f;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2em;
+  transform: translateX(50%);
+  z-index: 111;
+  cursor: pointer;
+  color: white;
+  box-shadow: 1px 1px 4px #0c1e35;
+}
+.layout .sidebar.collapsed .pro-sidebar-logo > h5 {
+  opacity: 0;
+}
+.layout .sidebar.collapsed .footer-box {
+  display: none;
+}
+.layout .sidebar.collapsed .sidebar-collapser {
+  left: 60px;
+}
+.layout .sidebar.collapsed .sidebar-collapser i {
+  transform: rotate(180deg);
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.25em 0.4em;
+  font-size: 75%;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.25rem;
+  color: #fff;
+  background-color: #6c757d;
+}
+.badge.primary {
+  background-color: #ab2dff;
+}
+.badge.secondary {
+  background-color: #079b0b;
+}
+
+.sidebar-toggler {
+  position: fixed;
+  right: 20px;
+  top: 20px;
+}
+
+.social-links a {
+  margin: 0 10px;
+  color: #3f4750;
+}
+h2 {
+  text-align: center;
+  margin-top: 20px;
+}
+
+table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background: #007BFF;
+            color: white;
+        }
+
+        img {
+            max-width: 50px;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        td a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        td a:hover {
+            text-decoration: underline;
+        }
+
+        .modal {
+    display: none; /* Tersembunyi secara default */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5); /* Latar hitam dengan opacity */
+  }
+  /* Konten modal */
+  .modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 8px;
+    position: relative;
+  }
+  /* Tombol close */
+  .close {
+    color: #aaa;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .close:hover,
+  .close:focus {
+    color: black;
+  }
+    </style>
+</head>
+
+<body>
+        
+    <div class="layout has-sidebar fixed-sidebar fixed-header">
+        <aside id="sidebar" class="sidebar break-point-sm has-bg-image">
+          <a id="btn-collapse" class="sidebar-collapser"><i class="ri-arrow-left-s-line"></i></a>
+          <div class="image-wrapper">
+          </div>
+          <div class="sidebar-layout">
+            <div class="sidebar-header">
+              <div class="pro-sidebar-logo">
+                <img src="./list-fiilm_files/round1.png" width="50px" alt="">
+                <h5>Halaman Admin</h5>
+              </div>
+            </div>
+            <div class="sidebar-content">
+              <nav class="menu open-current-submenu">
+                <ul>
+                    <li class="menu-header"><span style="font-weight: 700; color: #000;"> GENERAL </span></li>
+                    <li class="menu-item">
+                      <a href="http://localhost/websiteMovie/admin-home.php">
+                        <span class="menu-icon">
+                          <i class="ri-home-2-fill"></i>    
+                        </span>
+                        <span class="menu-title">Home</span>
+                      </a>
+                    </li>
+
+                    <li class="menu-item">
+                      <a href="http://localhost/websiteMovie/admin-crud-movies.php#">
+                        <span class="menu-icon">
+                        <i class="ri-edit-box-line"></i>
+                        </span>
+                        <span class="menu-title">List Film</span>
+                      </a>
+                    </li>
+                  <li class="menu-item">
+                      <a href="http://localhost/websiteMovie/admin/admin-tambah-movies.php">
+                        <span class="menu-icon">
+                        <i class="ri-file-add-line"></i>
+                        </span>
+                        <span class="menu-title">Tambah List Film</span>
+                      </a>
+                    </li>
+                  <li class="menu-header" style="padding-top: 20px"><span> Sign Out </span></li>
+                  <li class="menu-item">
+                    <a href="http://localhost/websiteMovie/user-login.php">
+                      <span class="menu-icon">
+                        <i class="ri-logout-box-fill"></i>
+                      </span>
+                      <span class="menu-title">Logout</span>
+                    </a>
+                  </li>
+                  <li class="menu-item" style="margin-top: 250px; margin-left: 200px;">
+  <a href="javascript:void(0)" onclick="showManualCard()">
+    <span class="menu-icon">
+      <i class="ri-question-line" style="font-size: 25px;"></i>
+    </span>
+    <span class="menu-title">Bantuan</span>
+  </a>
+</li>
+                </ul>
+              </nav>
+            </div>
+            <!-- <div class="sidebar-footer">
+              <div class="footer-box">
+                
+              </div>
+            </div> -->
+          </div>
+        </aside>
+        <div id="manualCardModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeManualCard()">×</span>
+    <h2>Manual Book</h2>
+  _____________________________________________________
+    <p>
+     
+      </p><p>Pada halaman ini, admin dapat melakukan beberapa tindakan sebagai berikut:</p>
+    <ul>
+      <li>Menambahkan Data Baru: Mengisi judul, penulis, deskripsi, kategori, dan mengunggah poster.</li>
+      <li>Mengedit Data: Memperbarui informasi atau poster yang relevan pada data yang sudah ada.
+      </li><li>Menghapus Data: Menghapus data yang tidak lagi diperlukan dari database.</li>
+      <li>Memeriksa Kualitas dan Konsistensi: Memastikan judul, penulis, deskripsi, dan poster telah sesuai dan lengkap.</li>
+      <li>Mengatur Tampilan atau Urutan Data: Mengelola tampilan agar data mudah dikelola dan ditemukan oleh pengguna lain.</li>
+      
+    </ul>
+   
+  <p></p>
+  </div>
+</div>
+        <div id="overlay" class="overlay"></div>
+        <div class="layout">
+          <main class="content">
+            <div>
+              <a id="btn-toggle" href="http://localhost/websiteMovie/admin-crud-movies.php#" class="sidebar-toggler break-point-sm">
+                <i class="ri-menu-line ri-xl"></i>
+              </a>
+              <h2>List Film </h2><table>
+        <thead>
+        
+            <tr>
+                <th>Judul</th>
+                <th>Author</th>
+                <th>Deskripsi</th>
+                <th>Kategori</th>
+                <th>Poster</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+                            <tr>
+                    <td>SONIC THE HEDGEHOG 3 (2024)</td>
+                    <td>Jeff Fowler</td>
+                    <td>Sonic, Tails, dan Knuckles bersatu kembali untuk menghadapi musuh misterius bernama Shadow, yang memiliki kekuatan luar biasa dan motif balas dendam. Shadow, seekor landak alien, dibebaskan dari fasilitas penelitian G.U.N. dan berusaha menghancurkan markas besar G.U.N. di London sebagai pembalasan atas kematian temannya, Maria. Tim Sonic harus bekerja sama untuk menghentikan rencana destruktif ini dan menyelamatkan dunia dari kehancuran.</td>
+                    <td>movies</td>
+                    <td><img src="./list-fiilm_files/2a5b1c4efb0ce31f2410dcece15455f0.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=14">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=14" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td> KRAVEN THE HUNTER (2024)</td>
+                    <td>Richard Wenk</td>
+                    <td>Dalam perjalanannya, Sergei menghadapi berbagai konflik internal dan eksternal, termasuk perseteruan dengan saudaranya, Dmitri (alias Chameleon), dan rivalitas dengan Aleksei Sytsevich (alias Rhino). Film ini mengeksplorasi transformasi Sergei dari seorang anak yang tertekan menjadi pemburu yang menargetkan penjahat, dengan tujuan membuktikan dirinya sebagai pemburu terhebat di dunia.</td>
+                    <td>movies</td>
+                    <td><img src="./list-fiilm_files/1573d3a129bf7d87383b28841be10852.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=15">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=15" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>MUFASA: THE LION KING (2024)</td>
+                    <td>Barry Jenkins</td>
+                    <td>Mufasa, yang terlahir sebagai seekor anak singa biasa tanpa status kerajaan, mengalami berbagai rintangan dalam hidupnya. Ia bukan bagian dari keluarga bangsawan, tetapi melalui keberanian, kebijaksanaan, dan tekadnya, ia berhasil membuktikan bahwa kepemimpinan sejati bukan hanya berasal dari garis keturunan, melainkan dari hati dan tindakan seseorang.</td>
+                    <td>movies</td>
+                    <td><img src="./list-fiilm_files/9ed8e583143eb3eb73666dde7fd74a13.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=16">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=16" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>WICKED (2024)</td>
+                    <td>Jon M. Chu</td>
+                    <td>Berlatar di dunia sihir Oz, kisah ini mengikuti Elphaba, seorang gadis berbakat yang lahir dengan kulit hijau karena sebuah kutukan. Meskipun cerdas dan penuh kasih sayang, ia sering dikucilkan oleh masyarakat. Ketika ia masuk ke Shiz University, ia bertemu dengan Glinda, seorang gadis populer dan penuh pesona. Meskipun awalnya bertolak belakang, keduanya menjalin persahabatan yang erat.</td>
+                    <td>movies</td>
+                    <td><img src="./list-fiilm_files/c34a8ae1adc2ceceb4cca80164334b38.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=17">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=17" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>GLADIATOR II (2024)</td>
+                    <td>Ridley Scott</td>
+                    <td>Lucius, yang telah lama hidup jauh dari politik Romawi, dipaksa kembali ke medan pertempuran sebagai seorang gladiator. Dengan kekuatan baru yang mengancam stabilitas Roma, ia harus bertarung bukan hanya demi kelangsungan hidupnya sendiri tetapi juga demi nasib rakyatnya.</td>
+                    <td>movies</td>
+                    <td><img src="./list-fiilm_files/bfb16632e3fa58d077a7dcc5ccf92ce5.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=18">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=18" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>WEREWOLVES (2024)</td>
+                    <td>Steven C. Miller</td>
+                    <td>Setahun setelah peristiwa supermoon yang menyebabkan hampir satu miliar orang berubah menjadi manusia serigala, dunia kini menghadapi ancaman serupa dengan kembalinya fenomena tersebut. Wesley Marshall, seorang mantan tentara dan ilmuwan, berusaha melindungi keluarganya dari ancaman transformasi dengan mencari cara untuk mencegah perubahan tersebut. Sementara itu, ketegangan meningkat dengan tetangganya, Cody Walker, yang memiliki pendekatan berbeda dalam menghadapi krisis ini.</td>
+                    <td>movies</td>
+                    <td><img src="./list-fiilm_files/d3824323e85ec24d43b14bde40e07906.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=19">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=19" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>NOSFERATU (2024)</td>
+                    <td>Robert Eggers</td>
+                    <td>Berlatar di Jerman pada abad ke-19, Nosferatu mengisahkan seorang wanita muda bernama Ellen Hutter (Lily-Rose Depp), yang menjadi sasaran obsesif seorang vampir kuno dan mengerikan, Count Orlok (Bill Skarsgård). Sang vampir membawa kengerian ke kota kecil mereka, menyebabkan wabah penyakit dan membangkitkan ketakutan yang mendalam di antara penduduk.</td>
+                    <td>movies</td>
+                    <td><img src="./list-fiilm_files/4d32cd50b168db8abab8cb3015954aed.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=20">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=20" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>RED ONE (2024)</td>
+                    <td>Jake Kasdan</td>
+                    <td>Pada Malam Natal, Santa Claus diculik oleh penyihir musim dingin bernama Grýla. Callum Drift, yang berencana pensiun setelah satu tugas terakhir, bekerja sama dengan Jack O'Malley untuk menyelamatkan Santa dan mencegah rencana jahat Grýla yang ingin memenjarakan semua orang yang pernah masuk dalam Daftar Nakal Santa. Dalam petualangan ini, mereka menghadapi berbagai rintangan, termasuk pasukan manusia salju dan makhluk mitologis lainnya, sambil berusaha memulihkan semangat Natal dan menyelamatkan dunia dari ancaman Grýla.</td>
+                    <td>movies</td>
+                    <td><img src="./list-fiilm_files/9340c7da6337db3199c3ce1c254753d0.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=21">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=21" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>VENOM: THE LAST DANCE (2024)</td>
+                    <td>Kelly Marcel</td>
+                    <td>Setelah peristiwa di film sebelumnya, Eddie Brock dan symbiote Venom menghadapi ancaman baru dari dewa symbiote bernama Knull. Knull mengirim makhluk asing yang dikenal sebagai Xenophage untuk memburu dan menghancurkan Venom. Sementara itu, pemerintah dan militer juga memburu Eddie dan Venom, memaksa mereka untuk terus bergerak dan mencari cara untuk menghentikan ancaman yang semakin mendekat.</td>
+                    <td>movies</td>
+                    <td><img src="./list-fiilm_files/6fd864ffee03fa335127ce3f1d7ae310.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=22">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=22" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>DESPICABLE ME 4 (2024)</td>
+                    <td>Chris Renaud</td>
+                    <td>Gru menghadiri reuni di sekolah lamanya, Lycée Pas Bon, dan bertemu kembali dengan rival lamanya, Maxime Le Mal. Maxime, yang telah mengubah dirinya menjadi hibrida kecoa, berencana untuk menguasai dunia dan membalas dendam pada Gru. Setelah Maxime melarikan diri dari penjara Anti-Villain League (AVL), Gru dan keluarganya ditempatkan dalam program perlindungan saksi di kota Mayflower. Di sana, mereka menjalani kehidupan dengan identitas baru sambil menghadapi berbagai tantangan, termasuk ancaman dari Maxime yang ingin mengubah putra Gru, Gru Jr., menjadi hibrida kecoa. Dengan bantuan tetangga mereka, Poppy, dan Minion yang setia, Gru berusaha menyelamatkan keluarganya dan menghentikan rencana jahat Maxime.</td>
+                    <td>movies</td>
+                    <td><img src="./list-fiilm_files/b72e87cf45c1ee343ec21616537bac89.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=23">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=23" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>JOKER: FOLIE A DEUX (2024)</td>
+                    <td>Todd Phillips</td>
+                    <td>Hubungan Arthur Fleck dengan Harleen Quinzel (Harley Quinn), yang diperankan oleh Lady Gaga. Kisahnya berfokus pada kehidupan Joker setelah kejadian di film pertama, di mana ia ditahan di Arkham Asylum. Di dalam fasilitas tersebut, ia bertemu dengan seorang psikiater bernama Harleen Quinzel yang kemudian jatuh cinta padanya. Hubungan mereka berkembang menjadi kisah cinta yang penuh kegilaan, membawa mereka pada serangkaian tindakan anarkis di Gotham City.
+
+</td>
+                    <td>movies</td>
+                    <td><img src="./list-fiilm_files/20cabbef7e27fd76e70d1e4876ad4c72.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=24">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=24" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>MY FAULT: LONDON (2025)</td>
+                    <td>Dani Girdwood dan Charlotte Fassler</td>
+                    <td>Selama musim panas, Noah berusaha menyesuaikan diri dengan kehidupan barunya, menjalin pertemanan dengan lingkaran sosial Nick, dan menghadapi hubungan rumit yang berkembang di antara mereka. Sementara itu, tanpa sepengetahuan Noah, ayah kandungnya yang baru saja dibebaskan dari penjara mulai mengawasi setiap gerak-geriknya, memaksa Noah untuk menghadapi masa lalunya yang kelam sambil merasakan cinta untuk pertama kalinya.</td>
+                    <td>movies</td>
+                    <td><img src="./list-fiilm_files/ttN5D6GKOwKWHmCzDGctAvaNMAi.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=25">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=25" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>DEADPOOL &amp; WOLVERINE (2024)</td>
+                    <td>Shawn Levy</td>
+                    <td>Deadpool yang kembali beraksi setelah dirinya masuk ke dalam dunia utama Marvel Cinematic Universe (MCU). Setelah mengalami kejadian aneh yang melibatkan TVA (Time Variance Authority), Deadpool bertemu dengan Wolverine, yang tampaknya berasal dari garis waktu yang berbeda. Awalnya, Wolverine enggan terlibat dalam kekacauan Deadpool. Namun, ancaman besar yang dapat mengacaukan multiverse memaksa mereka bekerja sama. Duo ini terjebak dalam berbagai pertarungan brutal, penuh aksi berdarah, serta humor khas Deadpool yang kocak dan nyeleneh.</td>
+                    <td>movies</td>
+                    <td><img src="./list-fiilm_files/ae3dddf605a6113b4dc7dc7b3826e931.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=26">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=26" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>EVIL DEAD RISE (2023)</td>
+                    <td>Lee Cronin</td>
+                    <td>dua saudara perempuan, Beth dan Ellie, yang terpisah selama bertahun-tahun. Beth, seorang wanita mandiri, mengunjungi kakaknya Ellie yang tinggal di sebuah apartemen tua bersama ketiga anaknya, Danny, Bridget, dan Kassie.
+Ketika Danny menemukan sebuah Necronomicon (Kitab Orang Mati) tersembunyi di gedung apartemen mereka, ia tanpa sengaja membangkitkan kekuatan jahat yang mengubah Ellie menjadi Deadite yang haus darah. Beth harus berjuang untuk melindungi keponakan-keponakannya dari serangan makhluk iblis yang semakin brutal dan penuh darah.</td>
+                    <td>movies</td>
+                    <td><img src="./list-fiilm_files/6f0ac5b524afdab44c2f0bd339339d8e.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=27">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=27" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>FAST X (2023)</td>
+                    <td>Louis Leterrier</td>
+                    <td>Dante Reyes (Jason Momoa), anak dari Hernan Reyes—seorang penguasa kartel yang dibunuh oleh Dom dan timnya dalam Fast Five (2011)—datang untuk membalas dendam. Dengan rencana licik yang telah disusunnya selama bertahun-tahun, Dante mengincar keluarga Dom, menghancurkan segala yang mereka cintai, dan memaksa mereka berpencar ke berbagai penjuru dunia. Dom harus menghadapi musuh yang tidak hanya kuat secara fisik tetapi juga licik dalam strategi. Dengan keluarganya yang tersebar di berbagai lokasi berbahaya, Dom dan timnya harus berpacu dengan waktu untuk menyelamatkan satu sama lain sambil melawan Dante, yang sepertinya selalu selangkah lebih maju.</td>
+                    <td>movies</td>
+                    <td><img src="./list-fiilm_files/6f9741d12b79288a0f632a358d21fc41.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=28">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=28" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>AQUAMAN AND THE LOST KINGDOM (2023)</td>
+                    <td>James Wan</td>
+                    <td>Setelah menjadi Raja Atlantis, Aquaman (Arthur Curry) harus menghadapi ancaman baru yang lebih besar dari sebelumnya. Black Manta, yang masih berusaha membalas dendam atas kematian ayahnya, menemukan artefak kuno yang memberinya kekuatan luar biasa. Dengan senjata baru yang berasal dari Lost Kingdom, Black Manta berencana untuk menghancurkan Atlantis dan seluruh dunia.Untuk menghentikan ancaman ini, Aquaman terpaksa bekerja sama dengan Orm (Ocean Master), saudara tirinya yang sebelumnya menjadi musuhnya. Bersama-sama, mereka harus melawan kekuatan gelap yang berasal dari Necrus, kerajaan bawah laut yang telah lama hilang dan kini kembali dengan niat jahat.</td>
+                    <td>movies</td>
+                    <td><img src="./list-fiilm_files/b81fb171542b10350a6ef14b3fca3450.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=29">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=29" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>OPPENHEIMER (2023)</td>
+                    <td>Christopher Nolan</td>
+                    <td>Sebagai seorang ilmuwan visioner, Oppenheimer direkrut oleh Jenderal Leslie Groves (Matt Damon) untuk memimpin penelitian di Los Alamos, New Mexico. Bersama tim ilmuwan terbaik, ia berhasil menciptakan senjata nuklir pertama dalam sejarah. Puncaknya adalah uji coba Trinity pada 16 Juli 1945, yang menandai awal dari era nuklir.Namun, kesuksesan ilmiahnya membawa konsekuensi berat. Setelah bom atom dijatuhkan di Hiroshima dan Nagasaki, Oppenheimer dihantui oleh rasa bersalah atas kehancuran yang ditimbulkan. Ia mulai menentang perlombaan senjata nuklir, tetapi pandangannya membuatnya bertentangan dengan pemerintah, terutama Lewis Strauss (Robert Downey Jr.), yang kemudian berperan dalam menghancurkan reputasi dan kariernya.</td>
+                    <td>movies</td>
+                    <td><img src="./list-fiilm_files/779da30964fb69b47c4f03138d482f9d.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=30">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=30" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>KUNG FU PANDA 4 (2024)</td>
+                    <td>Mike Mitchell</td>
+                    <td>Di tengah transisi ini, muncul ancaman dari The Chameleon, seorang penyihir jahat yang memiliki kemampuan mengubah bentuk dan mencuri kekuatan para pendekar kung fu. Ia berniat menguasai dunia dengan menyerap kekuatan para petarung hebat, termasuk Po.Untuk menghadapi ancaman baru ini, Po harus bekerja sama dengan Zhen, seekor rubah bandit yang cerdik dan berbakat dalam bertarung. Awalnya, hubungan mereka penuh dengan ketidakcocokan, tetapi seiring waktu, mereka belajar untuk saling percaya.</td>
+                    <td>movies</td>
+                    <td><img src="./list-fiilm_files/8be1b64a292cfd7c1864389c2ac8bb3d.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=31">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=31" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>GODZILLA x KONG: THE NEW EMPIRE (2024)</td>
+                    <td>Adam Wingard</td>
+                    <td>Di tengah misteri yang menghubungkan masa lalu para Titan, Kong menemukan spesies baru yang sama kuatnya dengannya, sementara Godzilla menghadapi kekuatan yang mengancam dominasinya sebagai Raja Monster. Dengan dunia yang berada di ambang kehancuran, manusia dan para Titan harus bersatu untuk menghadapi ancaman yang lebih besar dari sebelumnya.</td>
+                    <td>movies</td>
+                    <td><img src="./list-fiilm_files/4989301524a62d37238ff2da462b7b40.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=32">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=32" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>ELEMENTAL (2023)</td>
+                    <td>Peter Sohn</td>
+                    <td>Di kota unik bernama Element City, empat elemen—Api, Air, Tanah, dan Udara—hidup berdampingan. Ember Lumen, seorang perempuan elemen api yang bersemangat dan penuh tekad, bekerja keras di toko milik keluarganya. Suatu hari, ia bertemu dengan Wade Ripple, pria elemen air yang santai dan emosional.
+
+Meskipun sifat mereka berlawanan, Ember dan Wade mulai menjalin persahabatan yang tak terduga. Bersama, mereka menantang norma masyarakat dan menemukan bahwa persamaan bisa ditemukan dalam perbedaan. Ember juga mulai memahami dirinya sendiri lebih dalam, terutama tentang impiannya di luar harapan keluarganya.</td>
+                    <td>movies</td>
+                    <td><img src="./list-fiilm_files/aed88f1d2f811cc367156192d9ea904a.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=33">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=33" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>THE NUN II (2023)</td>
+                    <td>Michael Chaves</td>
+                    <td>Setelah peristiwa yang terjadi di film pertama, Valak, roh jahat yang muncul sebagai biarawati (nun), kembali muncul dengan ancaman yang lebih besar.
+
+Kali ini, kejahatan tersebut menyebar ke sebuah sekolah di Prancis, di mana kekuatan gelap Valak mulai mengganggu dan meresahkan para penghuni sekolah. Sister Irene, bersama dengan seorang teman baru, Debra (Storm Reid), berusaha menggali lebih dalam untuk menghentikan teror tersebut. Mereka harus berhadapan langsung dengan entitas iblis Valak, yang lebih kuat dan kejam dari sebelumnya.</td>
+                    <td>movies</td>
+                    <td><img src="./list-fiilm_files/5aad90047088d2a48187087b3d3be143.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=34">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=34" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>STUDY GROUP (2025)</td>
+                    <td>Lee Jang-hoon</td>
+                    <td>Seorang siswa yang bercita-cita masuk universitas bergengsi, tetapi ia bersekolah di sekolah dengan reputasi buruk yang dipenuhi siswa nakal. Meskipun ia ingin belajar dengan tekun, lingkungannya memaksanya untuk sering berkelahi demi bertahan hidup. Ia membentuk kelompok belajar (Study Group) untuk membantu teman-temannya belajar, tetapi malah terus-menerus harus menghadapi berbagai ancaman dan pertarungan.
+
+</td>
+                    <td>series</td>
+                    <td><img src="./list-fiilm_files/8fed33dc759f12160c21769b2a8f9331.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=35">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=35" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>MELO MOVIE (2025)</td>
+                    <td>Oh Chung-hwan</td>
+                    <td>Kisah mereka diwarnai oleh berbagai konflik emosional, termasuk kesalahpahaman, tekanan sosial, dan keputusan sulit yang harus mereka ambil. Dengan alur yang lambat namun penuh makna, Melo menggambarkan perjuangan cinta yang realistis dan menyayat hati, dengan akhir yang menguras emosi penonton.</td>
+                    <td>series</td>
+                    <td><img src="./list-fiilm_files/iEVOYk8eoMdCLFrNXtRSyqVM20c.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=36">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=36" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>SQUID GAME: SEASON 2 (2024)</td>
+                    <td>Hwang Dong-hyuk</td>
+                    <td>Dalam musim kedua ini, Gi-hun memutuskan untuk tidak pergi ke Amerika Serikat dan memilih kembali ke permainan dengan tekad menghancurkannya dari dalam. Sementara itu, detektif Hwang Jun-ho bekerja sama dengan tentara bayaran untuk menemukan Gi-hun dan mengungkap dalang di balik permainan tersebut. Musim ini mengeksplorasi tema-tema seperti keserakahan manusia, keputusasaan, dan moralitas, serta memperdalam dinamika antar karakter dan dilema moral yang dihadapi para peserta.</td>
+                    <td>series</td>
+                    <td><img src="./list-fiilm_files/3811ea700879e3b7a8ada265e71a49cf.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=37">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=37" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>THE LAST OF US (2023)</td>
+                    <td>Craig Mazin &amp; Neil Druckmann </td>
+                    <td>berlatar di Amerika Serikat yang hancur akibat pandemi global yang disebabkan oleh jamur Cordyceps. Kisahnya mengikuti Joel (diperankan oleh Pedro Pascal), seorang penyintas yang keras, yang ditugaskan untuk mengawal Ellie (diperankan oleh Bella Ramsey), seorang gadis berusia 14 tahun yang mungkin menjadi harapan terakhir umat manusia karena kekebalannya terhadap infeksi. Perjalanan mereka melintasi Amerika Serikat yang porak-poranda penuh dengan tantangan, baik dari makhluk terinfeksi maupun manusia yang putus asa.</td>
+                    <td>series</td>
+                    <td><img src="./list-fiilm_files/829d865e040cf1ec0b39623fd4def07c.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=38">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=38" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>GANGNAM B-SIDE (2024)</td>
+                    <td>Park Noo-ri</td>
+                    <td>seorang pekerja di bar terkenal di Gangnam yang mengetahui rahasia di balik serangkaian penghilangan misterius. Detektif Kang Dong-woo (Jo Woo-jin), yang sebelumnya diturunkan pangkatnya, kembali bertugas untuk menyelidiki kasus ini. Bersama dengan Yoon Gil-ho (Ji Chang-wook), seorang broker misterius yang menguasai dunia bawah Gangnam, dan jaksa Min Seo-jin (Ha Yoon-kyung), mereka bekerja sama untuk mengungkap kebenaran di balik penghilangan tersebut.</td>
+                    <td>series</td>
+                    <td><img src="./list-fiilm_files/e61307f96af3a8de8dc8fd02320294d1.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=39">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=39" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>AGATHA ALL ALONG (2024)</td>
+                    <td>Jac Schaeffer</td>
+                    <td>Tiga tahun setelah peristiwa di Westview, New Jersey, di mana Agatha Harkness terperangkap dalam mantra oleh Wanda Maximoff, Agatha berhasil melarikan diri dengan bantuan seorang remaja misterius. Remaja ini memohon Agatha untuk menemaninya melalui Witches' Road, sebuah jalur legendaris penuh ujian magis yang konon dapat mengembalikan kekuatan yang hilang. Tanpa kekuatan sihirnya, Agatha bersama remaja tersebut membentuk sebuah coven baru dan menghadapi berbagai tantangan, sambil berhadapan dengan musuh-musuh lama Agatha.</td>
+                    <td>series</td>
+                    <td><img src="./list-fiilm_files/bec2633a7c6b61162210dc002de37f5c.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=40">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=40" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>THE HOOLIGAN (2025)</td>
+                    <td>Dougie Brimson.</td>
+                    <td>Serial ini mengikuti kisah Kuba Wójcik, seorang remaja berusia 17 tahun yang terjerat dalam dunia kekerasan suporter sepak bola di Polandia. Setelah ayahnya, Michał Kocur Wójcik, dibebaskan dari penjara, Kuba merasa sulit untuk tidak mengikuti jejak ayahnya sebagai seorang hooligan. Kisah ini menggali dinamika keluarga, loyalitas, dan tantangan yang dihadapi oleh generasi muda dalam lingkungan yang penuh kekerasan dan tekanan sosial. </td>
+                    <td>series</td>
+                    <td><img src="./list-fiilm_files/vPva6bEwnrmgpNyHe8WDNkvxaav.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=41">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=41" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>THE TRAUMA CODE: HEROES ON CALL (2025)</td>
+                    <td>Choi Tae-kang</td>
+                    <td>Dr. Baek Kang-hyuk, dengan keterampilan bedah yang luar biasa dan pengalaman di medan perang, menghadapi tantangan dalam menyesuaikan diri dengan lingkungan rumah sakit sipil. Metode unorthodox dan kepercayaan dirinya yang tinggi sering kali menimbulkan ketegangan dengan rekan-rekannya. Namun, seiring berjalannya waktu, ia berhasil membimbing timnya untuk menjadi unit trauma yang efektif dan efisien.</td>
+                    <td>series</td>
+                    <td><img src="./list-fiilm_files/y8h2RwUZM5chv9tuaKVwSPoo3KE.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=42">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=42" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>YOUR FRIENDLY NEIGHBORHOOD SPIDER-MAN (2025)</td>
+                    <td>Jeff Trammell</td>
+                    <td>Serial ini mengikuti Peter Parker, seorang remaja yang baru mendapatkan kekuatan super, saat ia belajar menjadi pahlawan di bawah bimbingan Norman Osborn. Kisah ini mengeksplorasi tantangan yang dihadapi Peter dalam menyeimbangkan kehidupan pribadi dan tanggung jawabnya sebagai Spider-Man, sambil menghadapi berbagai musuh dan ancaman baru.</td>
+                    <td>series</td>
+                    <td><img src="./list-fiilm_files/kjcsNeqF52YUQ2rUBGLMHwLkxvR.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=43">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=43" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>SOLOLEVELING (2024)</td>
+                    <td>Chugong</td>
+                    <td>Serial ini mengikuti Sung Jinwoo, seorang pemburu terlemah yang secara misterius memperoleh kemampuan untuk meningkatkan level kekuatannya setelah menjalani misi berbahaya. Dengan kemampuan unik ini, ia berusaha melindungi dunia dari ancaman monster dan kekuatan jahat lainnya.</td>
+                    <td>series</td>
+                    <td><img src="./list-fiilm_files/geCRueV3ElhRTr0xtJuEWJt6dJ1.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=44">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=44" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>MOTEL CALIFORNIA (2025)</td>
+                    <td>Shim Yoon Seo</td>
+                    <td>Choi Hee-jin, seorang wanita yang dibesarkan di sebuah motel di pedesaan, kembali ke kampung halamannya setelah 12 tahun untuk menghadapi masa lalunya dan bertemu kembali dengan cinta pertamanya, Lee Yeon-soo. Serial ini mengeksplorasi dinamika hubungan mereka dan tantangan yang mereka hadapi dalam menghadapi kenangan dan perasaan yang belum terselesaikan.</td>
+                    <td>series</td>
+                    <td><img src="./list-fiilm_files/aFEIz6IuRc1aJTms22YKxx6548w.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=45">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=45" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>WHEN THE STARS GOSSIP(2025)</td>
+                    <td>Lee Young Mi</td>
+                    <td>Cerita mengikuti Gong Ryong, seorang dokter spesialis kandungan yang mengikuti tur ke Stasiun Luar Angkasa Internasional (ISS). Selama di sana, dia bertemu dengan Eve Kim, seorang astronot Korea-Amerika yang juga merupakan komandan misi. Pertemuan tak terduga ini menumbuhkan kisah cinta mereka di tengah tantangan dan kesepian luar angkasa.</td>
+                    <td>series</td>
+                    <td><img src="./list-fiilm_files/pdOiUbJ0vEJfh5OGFG8y1e4InQ7.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=46">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=46" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>AMERICAN PRIMEVAL (2025)</td>
+                    <td>Mark L. Smith</td>
+                    <td>Berlatar tahun 1857 selama Perang Utah, serial ini menggambarkan perjuangan untuk menguasai Barat Amerika dan bentrokan kekerasan antara Gereja Yesus Kristus dari Orang-Orang Suci Zaman Akhir (Gereja LDS) dan budaya di Wilayah Utah, berfokus pada peristiwa yang mengarah pada Pembantaian Mountain Meadows.</td>
+                    <td>series</td>
+                    <td><img src="./list-fiilm_files/ff0s9OHGNSZL6cVteIb7LNvTnJD.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=47">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=47" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>SAS ROUGUE HEROES (2022)</td>
+                    <td>Steven Knight</td>
+                    <td>Cerita dimulai pada tahun 1941 di rumah sakit Kairo, di mana perwira Angkatan Darat Inggris, David Stirling, setelah latihan yang gagal, memiliki ide untuk membentuk unit komando khusus yang dapat beroperasi jauh di belakang garis musuh.</td>
+                    <td>series</td>
+                    <td><img src="./list-fiilm_files/qEaxiDrPaTY34eIg6naXMfM2IKC.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=48">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=48" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>MR. PLANKTON (2024)</td>
+                    <td>Jo Yong</td>
+                    <td>Cerita berfokus pada Hae-jo, seorang pria yang lahir akibat inseminasi buatan yang salah, yang mengetahui bahwa ia menderita penyakit terminal. Ia memaksa mantan pacarnya, Jo Jae-mi, untuk menemaninya dalam perjalanan terakhirnya untuk mencari ayah kandungnya yang tidak pernah ia kenal.</td>
+                    <td>series</td>
+                    <td><img src="./list-fiilm_files/c31cvdNNiAMvb4XVjAwYLNn3LNO.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=49">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=49" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>SAKAMOTO DAYS (2025)</td>
+                    <td> Yuto Suzuki</td>
+                    <td>Taro Sakamoto, dulunya adalah pembunuh bayaran paling ditakuti, kini menjalani kehidupan tenang sebagai pemilik toko serba ada. Namun, masa lalunya yang kelam kembali menghantuinya, memaksanya untuk melindungi keluarganya dan menghadapi musuh-musuh lama. </td>
+                    <td>series</td>
+                    <td><img src="./list-fiilm_files/lBOHMPWetQprntjjtGquHwIHSvx.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=50">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=50" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>Alice in Borderland (2020)</td>
+                    <td>Yoshiki Watabe Yasuko Kuramitsu Shinsuke Sato</td>
+                    <td>Ryōhei Arisu, seorang pria muda yang terobsesi dengan video game, mendapati dirinya terjebak di Tokyo yang kosong dan suram. Bersama dengan teman-temannya, ia dipaksa untuk berpartisipasi dalam serangkaian permainan berbahaya yang menguji kecerdasan dan kelangsungan hidup mereka. Setiap permainan memiliki tingkat kesulitan yang ditandai dengan kartu remi, dan kegagalan dalam permainan berarti hukuman mati.</td>
+                    <td>series</td>
+                    <td><img src="./list-fiilm_files/c6d050ae61d8119027d993eda7fb4963.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=51">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=51" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>LA PALMA(2024)</td>
+                    <td>Lars Gudmestad</td>
+                    <td>Cerita berfokus pada keluarga Norwegia yang berlibur di La Palma, Kepulauan Canary. Liburan mereka berubah menjadi mimpi buruk ketika seorang peneliti muda menemukan tanda-tanda peringatan dari letusan gunung berapi yang akan datang, yang dapat memicu tsunami besar.</td>
+                    <td>series</td>
+                    <td><img src="./list-fiilm_files/lnFqXgpG0vpstspzsC4bW70YgYw.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=52">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=52" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>GO AHEAD, BROTHER (2024)</td>
+                    <td>Piotr Witkowski &amp; Konrad Eleryk</td>
+                    <td>Oskar Gwiazda, seorang mantan anggota unit kontra-terorisme SPAP, dipecat setelah mengalami serangan panik yang membahayakan timnya. Menghadapi kesulitan finansial dan tekanan dari utang ayahnya, Oskar berusaha beradaptasi dengan pekerjaan barunya sebagai petugas keamanan di sebuah kompleks perbelanjaan. Namun, ia segera menemukan peluang untuk menyelesaikan masalah keuangannya melalui cara-cara yang tidak konvensional.</td>
+                    <td>series</td>
+                    <td><img src="./list-fiilm_files/x6ei6X4uOc5OXBAIbB7uvCXSgxS.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=53">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=53" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>VALIANT ONE (2025)</td>
+                    <td>Daniel Myrick</td>
+                    <td>Misi rutin berubah menjadi bencana ketika helikopter Angkatan Darat AS jatuh di wilayah Korea Utara. Kapten Edward Brockman memimpin tim spesialis teknis non-tempur untuk menavigasi medan berbahaya dan menghadapi pasukan Korea Utara, sambil berusaha mengawal spesialis teknis sipil melintasi Zona Demiliterisasi yang berbahaya.</td>
+                    <td>movies</td>
+                    <td><img src="./list-fiilm_files/776e831165eadcb7bfcee93005e9d43b.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=54">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=54" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>THE GORGE (2025)</td>
+                    <td>Zach Dean</td>
+                    <td>Levi Kane (Miles Teller) dan Elena Morales (Anya Taylor-Joy) adalah penembak jitu elit yang menerima misi identik: menjaga sisi Barat dan Timur dari sebuah ngarai dalam selama satu tahun tanpa kontak dengan dunia luar atau rekan di sisi berlawanan. Ketika ancaman besar terhadap umat manusia terungkap, mereka harus bekerja sama untuk bertahan hidup dan mencegah bahaya yang ada di dalam ngarai tersebut.</td>
+                    <td>movies</td>
+                    <td><img src="./list-fiilm_files/5d1a15b98d62ac15e177e77c5b83d5ac.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=55">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=55" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>SPIDER-MAN: NO WAY HOME (2021)</td>
+                    <td>Chris McKenna &amp; Erik Sommers</td>
+                    <td>Setelah identitasnya sebagai Spider-Man terungkap oleh Mysterio di akhir Spider-Man: Far From Home (2019), hidup Peter Parker berubah drastis. Ia harus menghadapi dampak besar yang mengganggu kehidupan pribadinya, keluarganya, serta orang-orang terdekatnya, termasuk MJ, Ned, dan Bibi May.</td>
+                    <td>movies</td>
+                    <td><img src="./list-fiilm_files/faa8c2a6a5d681077d1ab02092a67766.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=56">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=56" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>NEWTOPIA (2025)</td>
+                    <td>Han Ji-won</td>
+                    <td>Serial ini mengisahkan pasangan yang baru saja putus, Lee Jae-yoon dan Kang Young-ju, yang berusaha untuk bersatu kembali setelah wabah zombie melanda Korea Selatan. Lee Jae-yoon, seorang tentara yang bergabung dengan militer lebih lambat dari rekan-rekannya, merasa cemas tentang masa depannya.</td>
+                    <td>series</td>
+                    <td><img src="./list-fiilm_files/hP9bsI2B7HONwDrzoNw5Q3QJMqU.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=57">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=57" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>ALL OF US ARE DEAD (2022)</td>
+                    <td>Chun Sung Il</td>
+                    <td>Serial All of Us Are Dead berlatar di sebuah SMA di Korea Selatan yang tiba-tiba menjadi pusat wabah virus zombie mematikan. Virus ini pertama kali menyebar dari laboratorium sains sekolah dan dengan cepat mengubah siswa menjadi zombie ganas. Sekelompok siswa yang masih bertahan harus berjuang untuk bertahan hidup tanpa adanya bantuan dari luar. Mereka terjebak di dalam sekolah yang penuh dengan bahaya dan harus bekerja sama untuk melarikan diri sambil menghadapi teman-teman mereka yang telah berubah menjadi zombie.</td>
+                    <td>series</td>
+                    <td><img src="./list-fiilm_files/f5ac04df8f9a5d3386a4e1138ca5f314.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=58">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=58" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>MOVING (2023)</td>
+                    <td>Kang Full</td>
+                    <td>Serial Moving berkisah tentang sekelompok siswa sekolah menengah dan orang tua mereka yang menyimpan rahasia besar: mereka memiliki kemampuan super yang diwarisi dari generasi sebelumnya. Mereka berusaha menjalani kehidupan normal dan menyembunyikan kekuatan mereka agar tidak menarik perhatian pihak berbahaya yang ingin mengeksploitasi mereka.</td>
+                    <td>series</td>
+                    <td><img src="./list-fiilm_files/e2e76b58e38f45bbfd72fed7385107b9.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=59">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=59" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>THE UNCANNY COUNTER (2020)</td>
+                    <td>Yeo Ji-na</td>
+                    <td>The Uncanny Counter mengisahkan sekelompok individu yang dikenal sebagai Counter, yang memiliki tugas khusus untuk memburu dan mengalahkan roh jahat yang merasuki tubuh manusia di dunia. Para Counter ini mendapatkan kekuatan super dari roh penjaga yang berasal dari dunia setelah kematian. So Mun, seorang siswa SMA dengan cacat fisik akibat kecelakaan, tiba-tiba direkrut menjadi Counter setelah salah satu anggota mereka meninggal. Awalnya tidak mengerti tentang kekuatan barunya, So Mun kemudian belajar bagaimana menggunakan kemampuannya untuk melawan roh jahat yang kuat dan membantu menyelamatkan jiwa yang terperangkap.</td>
+                    <td>series</td>
+                    <td><img src="./list-fiilm_files/ddd85ee26ce5cf09a08411756b1e6f85.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=60">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=60" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>VIGILANTE(2023)</td>
+                    <td>Moon Yoo Seok</td>
+                    <td>Drama Vigilante mengisahkan Kim Ji-yong, seorang mahasiswa akademi kepolisian yang memiliki kehidupan ganda. Di siang hari, ia adalah siswa teladan yang bercita-cita menjadi polisi, tetapi di malam hari, ia berubah menjadi Vigilante, seorang eksekutor keadilan yang menghukum para penjahat yang lolos dari sistem hukum.</td>
+                    <td>series</td>
+                    <td><img src="./list-fiilm_files/a03ab7df5876174f3ee5d82a84c3dd4e.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=61">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=61" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>ONE PIECE (2023)</td>
+                    <td>Gorō Taniguchi</td>
+                    <td>seorang pemuda yang bercita-cita menjadi Raja Bajak Laut dengan menemukan harta legendaris One Piece. Setelah memakan Buah Iblis Gomu Gomu no Mi, tubuhnya menjadi elastis seperti karet. Dengan kekuatan dan tekadnya, ia memulai perjalanan ke laut lepas untuk mengumpulkan kru dan mencapai impiannya.Sepanjang perjalanan, mereka menghadapi berbagai musuh, termasuk Marinir, bajak laut berbahaya seperti Bajak Laut Buggy, Kapten Kuro, dan Arlong. Dengan persahabatan, keberanian, dan impian besar mereka, Bajak Laut Topi Jerami menantang lautan luas menuju Grand Line untuk menemukan One Piece.</td>
+                    <td>series</td>
+                    <td><img src="./list-fiilm_files/c2a75722c895f668cb1c6ae53d293236.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=62">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=62" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>SHANG-CHI AND THE LEGEND OF THE TEN RINGS (2021)</td>
+                    <td>Destin Daniel Cretton</td>
+                    <td>Shang-Chi (diperankan oleh Simu Liu) menjalani kehidupan sederhana di San Francisco sebagai valet parkir bersama sahabatnya Katy (Awkwafina). Namun, ketika sekelompok pembunuh menyerangnya dan mencuri liontin pemberian ibunya, Shang-Chi dipaksa kembali ke dunia yang ia tinggalkan. Ia kembali bertemu dengan saudara perempuannya, Xialing (Meng’er Zhang), dan menghadapi ayahnya, Xu Wenwu (Tony Leung), pemimpin organisasi Ten Rings yang kuat dan memiliki sepuluh cincin mistis. Wenwu percaya bahwa istrinya masih hidup dan berusaha membebaskannya dari dunia tersembunyi Ta Lo, meskipun tindakannya bisa membawa bencana.</td>
+                    <td>movies</td>
+                    <td><img src="./list-fiilm_files/91b31e070a20658fd193b93cfe7d8a7f.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=63">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=63" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>BLACK PANTHER: WAKANDA FOREVER (2022)</td>
+                    <td>Ryan Coogler</td>
+                    <td>Setelah kematian Raja T’Challa, Wakanda berada dalam keadaan berduka dan rapuh. Ratu Ramonda (Angela Bassett), Shuri (Letitia Wright), M’Baku (Winston Duke), dan Okoye (Danai Gurira) berjuang untuk melindungi negaranya dari ancaman eksternal, terutama dari bangsa bawah laut yang dipimpin oleh Namor (Tenoch Huerta).
+
+Namor, penguasa kerajaan bawah laut Talokan, melihat Wakanda sebagai ancaman dan menginginkan aliansi melawan dunia luar. Namun, ketika Wakanda menolak, konflik pecah antara kedua peradaban ini. Shuri harus menemukan kekuatan dalam dirinya untuk melindungi negaranya dan memutuskan siapa yang akan meneruskan warisan Black Panther.</td>
+                    <td>movies</td>
+                    <td><img src="./list-fiilm_files/cce3a89057e39541408276c70f1f3c5c.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=64">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=64" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>SENNA (2024)</td>
+                    <td>Vicente Amorim dan Júlia Rezende</td>
+                    <td>perjalanan hidup Ayrton Senna dari awal kariernya di Formula Ford hingga menjadi juara dunia Formula 1 sebanyak tiga kali. Senna dikenal tidak hanya karena keterampilannya yang luar biasa di lintasan, tetapi juga karena tekad, semangat juang, dan rivalitasnya yang sengit dengan Alain Prost.</td>
+                    <td>series</td>
+                    <td><img src="./list-fiilm_files/yxkrrtyOzx36uHowqYB3Ec8b9wg.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=65">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=65" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>THE BOYS (2019)</td>
+                    <td>Eric Kripke</td>
+                    <td>Di dunia di mana para superhero dikenal sebagai </td>
+                    <td>series</td>
+                    <td><img src="./list-fiilm_files/2zmTngn1tYC1AvfnrFLhxeD82hz.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=66">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=66" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>DREAM PRODUCTIONS (2024)</td>
+                    <td>Paula Persimmon</td>
+                    <td>Berlatar antara peristiwa Inside Out dan Inside Out 2, serial ini mengeksplorasi dunia di balik layar pembuatan mimpi-mimpi Riley, seorang gadis yang kini berusia 12 tahun. Kisahnya berfokus pada Paula Persimmon, seorang sutradara mimpi ternama, dan timnya di Dream Productions saat mereka berusaha menciptakan mimpi-mimpi yang sesuai dengan perubahan emosi dan pengalaman Riley yang semakin kompleks memasuki masa remaja.</td>
+                    <td>series</td>
+                    <td><img src="./list-fiilm_files/j9jz5wZlQoq65YuYPNauB72uvFJ.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=67">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=67" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>MORBIUS (2022)</td>
+                    <td>Daniel Espinosa</td>
+                    <td>Dr. Michael Morbius (Jared Leto) adalah seorang ilmuwan jenius yang menderita penyakit darah langka. Dalam usahanya mencari obat, ia melakukan eksperimen dengan DNA kelelawar vampir dan terapi elektroshok. Namun, eksperimen ini memiliki efek samping mengerikan: Morbius berubah menjadi makhluk haus darah dengan kekuatan super, kecepatan luar biasa, kemampuan ekolokasi, dan kemampuan penyembuhan yang cepat.</td>
+                    <td>movies</td>
+                    <td><img src="./list-fiilm_files/2d77c1a281f34f6807056f697d539980.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=68">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=68" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>THE WILD ROBOT (2024)</td>
+                    <td>Chris Sanders</td>
+                    <td>sebuah robot layanan yang terdampar di sebuah pulau tak berpenghuni setelah kapal yang membawanya mengalami kecelakaan. Untuk bertahan hidup, Roz harus beradaptasi dengan lingkungan barunya, membangun hubungan dengan satwa liar setempat, dan menjadi ibu angkat bagi seekor anak angsa yatim piatu. Perjalanan Roz mengeksplorasi tema adaptasi, persahabatan, dan apa artinya menjadi "hidup".</td>
+                    <td>movies</td>
+                    <td><img src="./list-fiilm_files/e927548b2883c9c84ea582ad078927b0.jpg" alt="Poster" style="width:200px;height:auto;"></td>
+
+                    
+                    <td>
+                        <a href="http://localhost/websiteMovie/admin/edit_video-movies.php?id=69">Edit</a> |
+                        <a href="http://localhost/websiteMovie/admin/delete_video-movies.php?id=69" onclick="return confirm(&#39;Apakah Anda yakin ingin menghapus video ini?&#39;);">Hapus</a>
+                    </td>
+                </tr>
+                    </tbody>
+    </table>
+            </div>
+          </main>
+          <div class="overlay"></div>
+        </div>
+      </div>
+    <script src="./list-fiilm_files/core@2"></script>
+
+    <script>
+//kode modal card================================== 
+function showManualCard() {
+    document.getElementById('manualCardModal').style.display = 'block';
+  }
+  function closeManualCard() {
+    document.getElementById('manualCardModal').style.display = 'none';
+  }
+  // Tutup modal jika user klik di luar konten modal
+  window.onclick = function(event) {
+    var modal = document.getElementById('manualCardModal');
+    if (event.target === modal) {
+      closeManualCard();
+    }
+  }
+//tutup modal card==============================
+
+        function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}const ANIMATION_DURATION = 300;
+
+const SIDEBAR_EL = document.getElementById("sidebar");
+
+const SUB_MENU_ELS = document.querySelectorAll(
+".menu > ul > .menu-item.sub-menu");
+
+
+const FIRST_SUB_MENUS_BTN = document.querySelectorAll(
+".menu > ul > .menu-item.sub-menu > a");
+
+
+const INNER_SUB_MENUS_BTN = document.querySelectorAll(
+".menu > ul > .menu-item.sub-menu .menu-item.sub-menu > a");
+
+
+class PopperObject {
+
+
+
+
+  constructor(reference, popperTarget) {_defineProperty(this, "instance", null);_defineProperty(this, "reference", null);_defineProperty(this, "popperTarget", null);
+    this.init(reference, popperTarget);
+  }
+
+  init(reference, popperTarget) {
+    this.reference = reference;
+    this.popperTarget = popperTarget;
+    this.instance = Popper.createPopper(this.reference, this.popperTarget, {
+      placement: "right",
+      strategy: "fixed",
+      resize: true,
+      modifiers: [
+      {
+        name: "computeStyles",
+        options: {
+          adaptive: false } },
+
+
+      {
+        name: "flip",
+        options: {
+          fallbackPlacements: ["left", "right"] } }] });
+
+
+
+
+
+    document.addEventListener(
+    "click",
+    e => this.clicker(e, this.popperTarget, this.reference),
+    false);
+
+
+    const ro = new ResizeObserver(() => {
+      this.instance.update();
+    });
+
+    ro.observe(this.popperTarget);
+    ro.observe(this.reference);
+  }
+
+  clicker(event, popperTarget, reference) {
+    if (
+    SIDEBAR_EL.classList.contains("collapsed") &&
+    !popperTarget.contains(event.target) &&
+    !reference.contains(event.target))
+    {
+      this.hide();
+    }
+  }
+
+  hide() {
+    this.instance.state.elements.popper.style.visibility = "hidden";
+  }}
+
+
+class Poppers {
+
+
+  constructor() {_defineProperty(this, "subMenuPoppers", []);
+    this.init();
+  }
+
+  init() {
+    SUB_MENU_ELS.forEach(element => {
+      this.subMenuPoppers.push(
+      new PopperObject(element, element.lastElementChild));
+
+      this.closePoppers();
+    });
+  }
+
+  togglePopper(target) {
+    if (window.getComputedStyle(target).visibility === "hidden")
+    target.style.visibility = "visible";else
+    target.style.visibility = "hidden";
+  }
+
+  updatePoppers() {
+    this.subMenuPoppers.forEach(element => {
+      element.instance.state.elements.popper.style.display = "none";
+      element.instance.update();
+    });
+  }
+
+  closePoppers() {
+    this.subMenuPoppers.forEach(element => {
+      element.hide();
+    });
+  }}
+
+
+const slideUp = (target, duration = ANIMATION_DURATION) => {
+  const { parentElement } = target;
+  parentElement.classList.remove("open");
+  target.style.transitionProperty = "height, margin, padding";
+  target.style.transitionDuration = `${duration}ms`;
+  target.style.boxSizing = "border-box";
+  target.style.height = `${target.offsetHeight}px`;
+  target.offsetHeight;
+  target.style.overflow = "hidden";
+  target.style.height = 0;
+  target.style.paddingTop = 0;
+  target.style.paddingBottom = 0;
+  target.style.marginTop = 0;
+  target.style.marginBottom = 0;
+  window.setTimeout(() => {
+    target.style.display = "none";
+    target.style.removeProperty("height");
+    target.style.removeProperty("padding-top");
+    target.style.removeProperty("padding-bottom");
+    target.style.removeProperty("margin-top");
+    target.style.removeProperty("margin-bottom");
+    target.style.removeProperty("overflow");
+    target.style.removeProperty("transition-duration");
+    target.style.removeProperty("transition-property");
+  }, duration);
+};
+const slideDown = (target, duration = ANIMATION_DURATION) => {
+  const { parentElement } = target;
+  parentElement.classList.add("open");
+  target.style.removeProperty("display");
+  let { display } = window.getComputedStyle(target);
+  if (display === "none") display = "block";
+  target.style.display = display;
+  const height = target.offsetHeight;
+  target.style.overflow = "hidden";
+  target.style.height = 0;
+  target.style.paddingTop = 0;
+  target.style.paddingBottom = 0;
+  target.style.marginTop = 0;
+  target.style.marginBottom = 0;
+  target.offsetHeight;
+  target.style.boxSizing = "border-box";
+  target.style.transitionProperty = "height, margin, padding";
+  target.style.transitionDuration = `${duration}ms`;
+  target.style.height = `${height}px`;
+  target.style.removeProperty("padding-top");
+  target.style.removeProperty("padding-bottom");
+  target.style.removeProperty("margin-top");
+  target.style.removeProperty("margin-bottom");
+  window.setTimeout(() => {
+    target.style.removeProperty("height");
+    target.style.removeProperty("overflow");
+    target.style.removeProperty("transition-duration");
+    target.style.removeProperty("transition-property");
+  }, duration);
+};
+
+const slideToggle = (target, duration = ANIMATION_DURATION) => {
+  if (window.getComputedStyle(target).display === "none")
+  return slideDown(target, duration);
+  return slideUp(target, duration);
+};
+
+const PoppersInstance = new Poppers();
+
+/**
+ * wait for the current animation to finish and update poppers position
+ */
+const updatePoppersTimeout = () => {
+  setTimeout(() => {
+    PoppersInstance.updatePoppers();
+  }, ANIMATION_DURATION);
+};
+
+/**
+ * sidebar collapse handler
+ */
+document.getElementById("btn-collapse").addEventListener("click", () => {
+  SIDEBAR_EL.classList.toggle("collapsed");
+  PoppersInstance.closePoppers();
+  if (SIDEBAR_EL.classList.contains("collapsed"))
+  FIRST_SUB_MENUS_BTN.forEach(element => {
+    element.parentElement.classList.remove("open");
+  });
+
+  updatePoppersTimeout();
+});
+
+/**
+ * sidebar toggle handler (on break point )
+ */
+document.getElementById("btn-toggle").addEventListener("click", () => {
+  SIDEBAR_EL.classList.toggle("toggled");
+
+  updatePoppersTimeout();
+});
+
+/**
+ * toggle sidebar on overlay click
+ */
+document.getElementById("overlay").addEventListener("click", () => {
+  SIDEBAR_EL.classList.toggle("toggled");
+});
+
+const defaultOpenMenus = document.querySelectorAll(".menu-item.sub-menu.open");
+
+defaultOpenMenus.forEach(element => {
+  element.lastElementChild.style.display = "block";
+});
+
+/**
+ * handle top level submenu click
+ */
+FIRST_SUB_MENUS_BTN.forEach(element => {
+  element.addEventListener("click", () => {
+    if (SIDEBAR_EL.classList.contains("collapsed"))
+    PoppersInstance.togglePopper(element.nextElementSibling);else
+    {
+      const parentMenu = element.closest(".menu.open-current-submenu");
+      if (parentMenu)
+      parentMenu.
+      querySelectorAll(":scope > ul > .menu-item.sub-menu > a").
+      forEach(
+      (el) =>
+      window.getComputedStyle(el.nextElementSibling).display !==
+      "none" && slideUp(el.nextElementSibling));
+
+      slideToggle(element.nextElementSibling);
+    }
+  });
+});
+
+/**
+ * handle inner submenu click
+ */
+INNER_SUB_MENUS_BTN.forEach(element => {
+  element.addEventListener("click", () => {
+    slideToggle(element.nextElementSibling);
+  });
+});
+    </script>
+
+
+</body></html>
